@@ -1,0 +1,10 @@
+@import url(./__list/photo-elements__list.css);
+@import url(./__item/photo-elements__item.css);
+@import url(./__image/photo-elements__image.css);
+@import url(./__caption/photo-elements__caption.css);
+@import url(./__text/photo-elements__text.css);
+
+.photo-elements {
+  margin: 0;
+  padding: 0 0 66px;
+}
