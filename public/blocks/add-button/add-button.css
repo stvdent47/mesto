@@ -1,0 +1,16 @@
+.add-button {
+  max-width: 150px;
+  width: 100%;
+  height: 50px;
+  background-color: #000;
+  border: 2px solid #fff;
+  background-image: url(../../images/add-button-background-image.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  box-sizing: border-box;
+}
+
+.add-button:hover {
+  cursor: pointer;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+}
