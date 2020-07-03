@@ -10,3 +10,7 @@
   background-size: contain;
   box-sizing: border-box;
 }
+
+.like-button:hover {
+  cursor: pointer;
+}

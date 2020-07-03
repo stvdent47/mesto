@@ -1,13 +1,12 @@
 @import url(./__info/profile__info.css);
 @import url(./__title/profile__title.css);
 @import url(./__name/profile__name.css);
-@import url(./__caption/profile__caption.css);
+@import url(./__job/profile__job.css);
 @import url(./__photo/profile__photo.css);
 
 .profile {
   display: flex;
   flex-direction: row;
-  /* justify-content: space-between; */
   align-items: center;
   padding: 40px 0 50px;
 }
