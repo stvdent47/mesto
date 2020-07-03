@@ -1,0 +1,10 @@
+.photo-elements__caption {
+  height: 79px;
+  margin: -4px 0 0 0;
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 0 0 10px 10px;
+}

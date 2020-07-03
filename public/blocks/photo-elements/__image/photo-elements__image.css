@@ -1,0 +1,6 @@
+.photo-elements__image {
+  width: 100%;
+  object-fit: cover;
+  margin: 0;
+  border-radius: 10px 10px 0 0;
+}
