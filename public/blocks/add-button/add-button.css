@@ -12,5 +12,6 @@
 
 .add-button:hover {
   cursor: pointer;
-  border: 2px solid rgba(255, 255, 255, 0.6);
+  opacity: .6;
+  transition: opacity 0.2s linear;
 }
