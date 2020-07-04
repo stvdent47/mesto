@@ -21,9 +21,6 @@ window.addEventListener('load', () => {
 
   saveButton.addEventListener('click', (e) => {
     e.preventDefault();
-    
-    // let nameInput = document.querySelector('#nameInput');
-    // let jobInput = document.querySelector('#jobInput');
 
     nameField.textContent = nameInput.value;
     jobField.textContent = jobInput.value;
