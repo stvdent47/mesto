@@ -5,6 +5,11 @@ window.addEventListener('load', () => {
   let saveButton = document.querySelector('.popup__submit');
   let nameField = document.querySelector('.profile__name');
   let jobField = document.querySelector('.profile__job');
+  let nameInput = document.querySelector('#nameInput');
+  let jobInput = document.querySelector('#jobInput');
+
+  nameInput.value = nameField.textContent;
+  jobInput.value = jobField.textContent;
 
   editButton.addEventListener('click', () => {
     popUp.classList.toggle('popup_opened');
@@ -17,8 +22,8 @@ window.addEventListener('load', () => {
   saveButton.addEventListener('click', (e) => {
     e.preventDefault();
     
-    let nameInput = document.querySelector('#nameInput');
-    let jobInput = document.querySelector('#jobInput');
+    // let nameInput = document.querySelector('#nameInput');
+    // let jobInput = document.querySelector('#jobInput');
 
     nameField.textContent = nameInput.value;
     jobField.textContent = jobInput.value;

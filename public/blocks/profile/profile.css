@@ -10,3 +10,9 @@
   align-items: center;
   padding: 40px 0 50px;
 }
+
+@media all and (max-width: 625px) {
+  .profile {
+    flex-direction: column;
+  }
+}
