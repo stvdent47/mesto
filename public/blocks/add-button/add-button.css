@@ -8,6 +8,7 @@
   background-repeat: no-repeat;
   background-position: center;
   box-sizing: border-box;
+  margin-left: auto;
 }
 
 .add-button:hover {
