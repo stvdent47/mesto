@@ -1,18 +1,24 @@
-.edit-button {
-  max-width: 24px;
-  width: 100%;
+.profile__edit-button {
+  width: 24px;
   height: 24px;
   background-color: #000;
   border: 1px solid #fff;
-  background-image: url(../../images/edit-button-background-image.png);
+  background-image: url(../../../images/edit-button-background-image.png);
   background-repeat: no-repeat;
   background-position: center;
   margin: 19px 0 0;
   box-sizing: border-box;
 }
 
-.edit-button:hover {
+.profile__edit-button:hover {
   cursor: pointer;
   opacity: .6;
   transition: opacity 0.2s linear;
+}
+
+@media all and (max-width: 650px) {
+  .profile__edit-button {
+    width: 18px;
+    height: 18px;
+  }
 }

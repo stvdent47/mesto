@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <link rel="stylesheet" href="./public/pages/index.css">
   <title>Mesto</title>
-  <script src="./public/scripts/script.js"></script>
 </head>
 <body class="page">
   <div class="root">
     <header class="header">
-      <img src="./public/images/logo.png" alt="логотип место" class="header__logo">
+      <img src="./public/images/logo.svg" alt="логотип место" class="header__logo">
     </header>
 
     <main class="main">
@@ -20,14 +19,14 @@
         <div class="profile__info">
           <div class="profile__title">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
-            <button class="edit-button"></button>  
+            <button class="profile__edit-button" type="button"></button>  
           </div>
           
-          <h2 class="profile__job">Исследователь океана</h2>
+          <p class="profile__job">Исследователь океана</p>
           
         </div>
         
-        <button class="add-button"></button>
+        <button class="profile__add-button" type="button"></button>
       </section>
 
       <section class="photo-elements">
@@ -36,9 +35,9 @@
             <img src="./public/images/karach-image.jpg" alt="фото Карачаевск" class="photo-elements__image">
             
             <div class="photo-elements__caption">
-              <p class="photo-elements__text">Карачаевск</p>
+              <h2 class="photo-elements__text">Карачаевск</h2>
 
-              <button class="like-button"></button>
+              <button class="photo-elements__like-button" type="button"></button>
             </div>
           </li>
           
@@ -46,9 +45,9 @@
             <img src="./public/images/elbrus-image.jpg" alt="фото Эльбрус" class="photo-elements__image">
             
             <div class="photo-elements__caption">
-              <p class="photo-elements__text">Гора Эльбрус</p>
+              <h2 class="photo-elements__text">Гора Эльбрус</h2>
 
-              <button class="like-button"></button>
+              <button class="photo-elements__like-button" type="button"></button>
             </div>
           </li>
           
@@ -56,9 +55,9 @@
             <img src="./public/images/dombai-image.jpg" alt="фото Домбай" class="photo-elements__image">
             
             <div class="photo-elements__caption">
-              <p class="photo-elements__text">Домбай</p>
+              <h2 class="photo-elements__text">Домбай</h2>
 
-              <button class="like-button"></button>
+              <button class="photo-elements__like-button" type="button"></button>
             </div>
           </li>
 
@@ -66,9 +65,9 @@
             <img src="./public/images/elbrus-image.jpg" alt="фото Эльбрус" class="photo-elements__image">
             
             <div class="photo-elements__caption">
-              <p class="photo-elements__text">Гора Эльбрус</p>
+              <h2 class="photo-elements__text">Гора Эльбрус</h2>
 
-              <button class="like-button"></button>
+              <button class="photo-elements__like-button" type="button"></button>
             </div>
           </li>
          
@@ -76,9 +75,9 @@
             <img src="./public/images/dombai-image.jpg" alt="фото Домбай" class="photo-elements__image">
            
             <div class="photo-elements__caption">
-              <p class="photo-elements__text">Домбай</p>
+              <h2 class="photo-elements__text">Домбай</h2>
          
-              <button class="like-button"></button>
+              <button class="photo-elements__like-button" type="button"></button>
             </div>
           </li>
 
@@ -86,9 +85,9 @@
             <img src="./public/images/karach-image.jpg" alt="фото Карачаевск" class="photo-elements__image">
            
             <div class="photo-elements__caption">
-              <p class="photo-elements__text">Карачаево-Черкессия</p>
+              <h2 class="photo-elements__text">Карачаево-Черкессия</h2>
               
-              <button class="like-button"></button>
+              <button class="photo-elements__like-button" type="button"></button>
             </div>
           </li>
         </ul>
@@ -103,15 +102,17 @@
       <div class="popup__container">
         <h2 class="popup__title">Редактировать профиль</h2>
         
-        <form action="#">
-          <input type="text" name="name" id="nameInput" placeholder="Жак-Ив Кусто" class="popup__input-text">
-          <input type="text" name="job" id="jobInput" placeholder="Исследователь океана" class="popup__input-text">
-          <input type="submit" value="Сохранить" class="popup__submit">
+        <form action="#" name="popup-form" class="popup__form" method="POST">
+          <input type="text" name="name" id="name-input" placeholder="Жак-Ив Кусто" class="popup__input-text">
+          <input type="text" name="job" id="job-input" placeholder="Исследователь океана" class="popup__input-text">
+          <button type="submit" class="popup__submit">Сохранить</button>
         </form>
 
-        <button class="popup__close-button"></button>
+        <button class="popup__close-button" type="button"></button>
       </div>
     </div>
   </div>
+
+  <script src="./public/scripts/script.js"></script>
 </body>
 </html>
