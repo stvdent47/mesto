@@ -1,6 +1,5 @@
 .photo-elements__caption {
-  height: 79px;
-  margin: -4px 0 0 0;
+  margin: 0;
   background-color: #fff;
   display: flex;
   flex-direction: row;
