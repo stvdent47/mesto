@@ -23,7 +23,8 @@
 
 @media all and (max-width: 650px) {
   .profile {
+    max-width: calc(100% - 38px);
     flex-direction: column;
-    padding: 42px 27px 36px;
+    padding: 42px 19px 36px;
   }
 }
