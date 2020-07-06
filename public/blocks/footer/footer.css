@@ -16,6 +16,7 @@
 
 @media all and (max-width: 650px) {
   .footer {
+    max-width: calc(100% - 38px);
     padding: 0 19px 60px;
     margin: 0;
   }
