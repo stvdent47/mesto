@@ -11,6 +11,12 @@
   white-space: nowrap;
 }
 
+@media all and (max-width: 900px) {
+  .profile__job {
+    max-width: 350px;
+  }
+}
+
 @media all and (max-width: 650px) {
   .profile__job {
     font-size: 14px;
