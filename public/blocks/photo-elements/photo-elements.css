@@ -9,3 +9,9 @@
   margin: 0;
   padding: 0 0 66px;
 }
+
+@media all and (max-width: 650px) {
+  .photo-elements {
+    padding: 0 0 48px;
+  }
+}
