@@ -1,4 +1,4 @@
-.popup__submit {
+.edit-popup__submit {
   color: #fff;
   max-width: calc(100% - 72px);
   width: 100%;
@@ -9,14 +9,14 @@
   border-radius: 2px;
 }
 
-.popup__submit:hover {
+.edit-popup__submit:hover {
   background-color: rgba(0, 0, 0, .8);
   cursor: pointer;
   transition: background-color 0.2s linear;
 }
 
 @media all and (max-width: 400px) {
-  .popup__submit {
+  .edit-popup__submit {
     max-width: calc(100% - 32px);
     margin: 0 16px 36px;
   }

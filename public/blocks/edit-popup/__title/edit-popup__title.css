@@ -1,4 +1,4 @@
-.popup__title {
+.edit-popup__title {
   max-width: calc(100% - 68px);
   width: 100%;
   font-style: normal;
@@ -9,7 +9,7 @@
 }
 
 @media all and (max-width: 400px) {
-  .popup__title {
+  .edit-popup__title {
     max-width: calc(100% - 32px);
     margin: 36px 16px 34px;
   }
