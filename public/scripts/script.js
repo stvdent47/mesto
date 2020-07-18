@@ -1,28 +1,48 @@
-let editButton = document.querySelector('.profile__edit-button');
-let popUp = document.querySelector('.popup');
-let closeButton = document.querySelector('.popup__close-button');
-let nameField = document.querySelector('.profile__name');
-let jobField = document.querySelector('.profile__job');
-let nameInput = document.querySelector('#name-input');
-let jobInput = document.querySelector('#job-input');
-let popupForm = document.querySelector('.popup__form');
+const editButton = document.querySelector('.profile__edit-button');
+const editPopUp = document.querySelector('.edit-popup');
+const editPopupForm = document.querySelector('.edit-popup__form');
+const editCloseButton = document.querySelector('.edit-popup__close-button');
 
-const togglePopup = () => {
-  if (!popUp.classList.contains('popup_opened')) {
+const nameField = document.querySelector('.profile__name');
+const jobField = document.querySelector('.profile__job');
+const nameInput = document.querySelector('#name-input');
+const jobInput = document.querySelector('#job-input');
+
+const toggleEditPopup = () => {
+  if (!editPopUp.classList.contains('edit-popup_opened')) {
     nameInput.value = nameField.textContent;
     jobInput.value = jobField.textContent;
   }
-  popUp.classList.toggle('popup_opened');
+  editPopUp.classList.toggle('edit-popup_opened');
 }
 
-const submitHandler = (e) => {
+const editSubmitHandler = (e) => {
   e.preventDefault();
 
   nameField.textContent = nameInput.value;
   jobField.textContent = jobInput.value;
-  togglePopup();
+  toggleEditPopup();
 }
 
-editButton.addEventListener('click', togglePopup);
-closeButton.addEventListener('click', togglePopup);
-popupForm.addEventListener('submit', submitHandler);
+const addButton = document.querySelector('.profile__add-button');
+const addPopUp = document.querySelector('.add-popup');
+const addPopupForm = document.querySelector('.add-popup__form');
+const addCloseButton = document.querySelector('.add-popup__close-button');
+
+const toggleAddPopup = () => {
+  addPopUp.classList.toggle('add-popup_opened');
+}
+
+const addSubmitHandler = (e) => {
+  e.preventDefault();
+
+  toggleAddPopup();
+}
+
+editButton.addEventListener('click', toggleEditPopup);
+editCloseButton.addEventListener('click', toggleEditPopup);
+editPopupForm.addEventListener('submit', editSubmitHandler);
+
+addButton.addEventListener('click', toggleAddPopup);
+addCloseButton.addEventListener('click', toggleAddPopup);
+addPopupForm.addEventListener('submit', addSubmitHandler);

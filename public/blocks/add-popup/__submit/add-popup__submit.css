@@ -1,0 +1,23 @@
+.add-popup__submit {
+  color: #fff;
+  max-width: calc(100% - 72px);
+  width: 100%;
+  height: 50.15px;
+  margin: 0 36px 36px;
+  background-color: #000;
+  border: none;
+  border-radius: 2px;
+}
+
+.add-popup__submit:hover {
+  background-color: rgba(0, 0, 0, .8);
+  cursor: pointer;
+  transition: background-color 0.2s linear;
+}
+
+@media all and (max-width: 400px) {
+  .add-popup__submit {
+    max-width: calc(100% - 32px);
+    margin: 0 16px 36px;
+  }
+}
