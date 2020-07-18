@@ -46,3 +46,10 @@ editPopupForm.addEventListener('submit', editSubmitHandler);
 addButton.addEventListener('click', toggleAddPopup);
 addCloseButton.addEventListener('click', toggleAddPopup);
 addPopupForm.addEventListener('submit', addSubmitHandler);
+
+const likeButton = document.querySelector('.photo-elements__like-button');
+const toggleLikeButton = (e) => {
+  e.target.classList.toggle('photo-elements__like-button_active');
+}
+
+document.querySelector('.photo-elements__like-button').addEventListener('click', toggleLikeButton);
