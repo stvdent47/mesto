@@ -5,11 +5,14 @@
 @import url(./__close-button/add-popup__close-button.css);
 
 .add-popup {
-  display: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 0;
   background-color: rgba(0, 0, 0, .5);
 }

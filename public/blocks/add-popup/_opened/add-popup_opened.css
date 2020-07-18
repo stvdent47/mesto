@@ -1,5 +1,5 @@
 .add-popup_opened {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  opacity: 1;
+  transition: opacity .2s linear;
+  height: 100%;
 }
