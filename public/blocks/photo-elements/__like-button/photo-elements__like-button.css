@@ -2,6 +2,7 @@
   width: 21px;
   height: 18px;
   margin: 0 15px 0 0;
+  padding: 0;
   border: none;
   background-color: #fff;
   background-image: url(../../../images/like-button-image.svg);

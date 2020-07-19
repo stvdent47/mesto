@@ -26,10 +26,17 @@ const initialCards = [
   }
 ];
 
+//like button switching
 const toggleLikeButton = (e) => {
   e.target.classList.toggle('photo-elements__like-button_active');
 }
 
+//card deleting
+const deleteCard = (e) => {
+  e.target.closest('.photo-elements__item').remove();
+}
+
+//card adding functionality
 const addPhotoElement = (caption, imageLink) => {
   const photoElementTemplate = document.querySelector('#photo-elements-template').content;
   const photoElement = photoElementTemplate.cloneNode(true);
@@ -40,6 +47,7 @@ const addPhotoElement = (caption, imageLink) => {
   photoElementsList.prepend(photoElement);
 
   document.querySelector('.photo-elements__like-button').addEventListener('click', toggleLikeButton);
+  document.querySelector('.photo-elements__delete-button').addEventListener('click', deleteCard)
 }
 
 const renderCards = (arr) => {
