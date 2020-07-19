@@ -50,6 +50,7 @@ const addPhotoElement = (caption, imageLink) => {
   document.querySelector('.photo-elements__delete-button').addEventListener('click', deleteCard)
 }
 
+//initial cards rendering
 const renderCards = (arr) => {
   arr.forEach((item) => {
     addPhotoElement(item.name, item.link);
