@@ -1,4 +1,3 @@
-// rendering initial cards
 const initialCards = [
   {
       name: 'Архыз',
@@ -26,14 +25,29 @@ const initialCards = [
   }
 ];
 
-//like button switching
+
 const toggleLikeButton = (e) => {
   e.target.classList.toggle('photo-elements__like-button_active');
 }
 
-//card deleting
 const deleteCard = (e) => {
   e.target.closest('.photo-elements__item').remove();
+}
+
+//picture popup functionaluty
+const togglePicPopup = () => {
+  const picPopup = document.querySelector('.pic-popup');
+  picPopup.classList.toggle('pic-popup_opened');
+}
+
+const openCard = (e) => {
+  const picPopupCloseButton = document.querySelector('.pic-popup__close-button');
+  
+  togglePicPopup();
+  document.querySelector('.pic-popup__image').src = e.target.src;
+  document.querySelector('.pic-popup__caption').textContent =   e.target.nextElementSibling.querySelector('.photo-elements__text').textContent;
+
+  picPopupCloseButton.addEventListener('click', togglePicPopup);
 }
 
 //card adding functionality
@@ -47,9 +61,12 @@ const addPhotoElement = (caption, imageLink) => {
   photoElementsList.prepend(photoElement);
 
   document.querySelector('.photo-elements__like-button').addEventListener('click', toggleLikeButton);
-  document.querySelector('.photo-elements__delete-button').addEventListener('click', deleteCard)
+  document.querySelector('.photo-elements__delete-button').addEventListener('click', deleteCard);
+  document.querySelector('.photo-elements__image').addEventListener('click', openCard);
+  
 }
 
+//initial cards rendering
 const renderCards = (arr) => {
   arr.forEach((item) => {
     addPhotoElement(item.name, item.link);
@@ -116,6 +133,3 @@ addButton.addEventListener('click', toggleAddPopup);
 addCloseButton.addEventListener('click', toggleAddPopup);
 addPopupForm.addEventListener('submit', addSubmitHandler);
 
-
-//cardLiking
-// const likeButton = document.querySelector('.photo-elements__like-button');

@@ -5,3 +5,7 @@
   object-fit: cover;
   margin: 0;
 }
+
+.photo-elements__image:hover {
+  cursor: pointer;
+}
