@@ -13,11 +13,11 @@
 
 @media all and (max-width: 400px) {
   .edit-popup__input-text {
-    max-width: calc(100% - 32px);
-    margin: 0 16px 30px;
+    max-width: calc(100% - 40px);
+    margin: 0 20px 30px;
   }
 
   .edit-popup__input-text:last-of-type {
-    margin: 0 16px 48px;
+    margin: 0 20px 36px;
   }
 }
