@@ -118,6 +118,7 @@ const addSubmitHandler = (e) => {
   const newPhotoElementLink = document.querySelector('#place-link-input').value;
 
   addPhotoElement(newPhotoElementName, newPhotoElementLink);
+  document.querySelector('.add-popup__form').reset();
   toggleAddPopup();
 }
 

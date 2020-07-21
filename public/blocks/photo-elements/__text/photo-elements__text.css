@@ -1,4 +1,5 @@
 .photo-elements__text {
+  max-width: 227px;
   margin: 25px 0 31px 21px;
   font-style: normal;
   font-weight: 900;
