@@ -38,21 +38,35 @@
       <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
 
-    <div class="edit-popup">
-      <div class="edit-popup__container">
-        <h2 class="edit-popup__title">Редактировать профиль</h2>
+    <div class="popup edit-popup">
+      <div class="popup__container">
+        <h2 class="popup__title">Редактировать профиль</h2>
         
-        <form action="#" name="edit-popup-form" class="edit-popup__form" method="POST">
-          <input type="text" name="profile-name" id="profile-name-input" placeholder="Ваше имя" class="edit-popup__input-text">
-          <input type="text" name="profile-job" id="profile-job-input" placeholder="Ваша профессия" class="edit-popup__input-text">
-          <button type="submit" class="edit-popup__submit">Сохранить</button>
+        <form action="#" name="edit-popup-form" class="popup__form" method="POST">
+          <input type="text" name="profile-name" id="profile-name-input" placeholder="Ваше имя" class="popup__input-text">
+          <input type="text" name="profile-job" id="profile-job-input" placeholder="Ваша профессия" class="popup__input-text">
+          <button type="submit" class="popup__submit">Сохранить</button>
         </form>
 
-        <button class="edit-popup__close-button" type="button" aria-label="Закрыть"></button>
+        <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
       </div>
     </div>
 
-    <div class="add-popup">
+    <div class="popup add-popup">
+      <div class="popup__container">
+        <h2 class="popup__title">Новое место</h2>
+        
+        <form action="#" name="add-popup-form" class="popup__form" method="POST">
+          <input type="text" name="place-name" id="place-name-input" placeholder="Название" class="popup__input-text">
+          <input type="text" name="place-link" id="place-link-input" placeholder="Ссылка на картинку" class="popup__input-text">
+          <button type="submit" class="popup__submit">Сохранить</button>
+        </form>
+
+        <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
+      </div>
+    </div>
+
+    <!-- <div class="add-popup">
       <div class="add-popup__container">
         <h2 class="add-popup__title">Новое место</h2>
         
@@ -64,7 +78,7 @@
 
         <button class="add-popup__close-button" type="button" aria-label="Закрыть"></button>
       </div>
-    </div>
+    </div> -->
 
     <div class="pic-popup">
       <div class="pic-popup__container">

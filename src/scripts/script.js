@@ -86,11 +86,11 @@ const nameInput = document.querySelector('#profile-name-input');
 const jobInput = document.querySelector('#profile-job-input');
 
 const toggleEditPopup = () => {
-  if (!editPopUp.classList.contains('edit-popup_opened')) {
+  if (!editPopUp.classList.contains('popup_opened')) {
     nameInput.value = nameField.textContent;
     jobInput.value = jobField.textContent;
   }
-  editPopUp.classList.toggle('edit-popup_opened');
+  editPopUp.classList.toggle('popup_opened');
 }
 
 const editSubmitHandler = (e) => {

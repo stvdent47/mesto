@@ -1,4 +1,4 @@
-.edit-popup__container {
+.popup__container {
   max-width: 430px;
   width: 100%;
   background-color: #fff;
@@ -8,13 +8,13 @@
 }
 
 @media all and (max-width: 550px) {
-  .edit-popup__container {
+  .popup__container {
     max-width: 300px;
   }
 }
 
 @media all and (max-width: 400px) {
-  .edit-popup__container {
+  .popup__container {
     max-width: 240px;
   }
 }
