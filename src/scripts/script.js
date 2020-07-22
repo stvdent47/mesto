@@ -64,8 +64,8 @@ const togglePicPopup = () => {
 
 const openCard = (e) => {
   togglePicPopup();
-  document.querySelector('.pic-popup__image').src = e.target.src;
-  document.querySelector('.pic-popup__caption').textContent = e.target.nextElementSibling.querySelector('.photo-elements__text').textContent;
+  picPopup.querySelector('.pic-popup__image').src = e.target.src;
+  picPopup.querySelector('.pic-popup__caption').textContent = e.target.nextElementSibling.querySelector('.photo-elements__text').textContent;
   picPopupCloseButton.addEventListener('click', togglePicPopup);
 }
 
@@ -92,11 +92,15 @@ initialCards.forEach((card) => {
 
 //popups functionality
 const togglePopup = (popupToToggle) => {
+  popupToToggle.classList.toggle('popup_opened');
+}
+
+const toggleEditPopup = (popupToToggle) => {
   if (!popupToToggle.classList.contains('popup_opened')) {
     nameInput.value = nameField.textContent;
     jobInput.value = jobField.textContent;
   }
-  popupToToggle.classList.toggle('popup_opened');
+  togglePopup(popupToToggle);
 }
 
 const editSubmitHandler = (e) => {
@@ -104,7 +108,7 @@ const editSubmitHandler = (e) => {
 
   nameField.textContent = nameInput.value;
   jobField.textContent = jobInput.value;
-  togglePopup(editPopUp);
+  toggleEditPopup(editPopUp);
 }
 
 const addSubmitHandler = (e) => {
@@ -117,10 +121,10 @@ const addSubmitHandler = (e) => {
 //eventListeners
 //profileEditing
 editButton.addEventListener('click', () => {
-  togglePopup(editPopUp);
+  toggleEditPopup(editPopUp);
 });
 editPopupCloseButton.addEventListener('click', () => {
-  togglePopup(editPopUp);
+  toggleEditPopup(editPopUp);
 });
 editPopUpForm.addEventListener('submit', editSubmitHandler);
 //cardAdding
