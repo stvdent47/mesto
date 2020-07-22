@@ -64,8 +64,8 @@ const togglePicPopup = () => {
 
 const openCard = (e) => {
   togglePicPopup();
-  document.querySelector('.pic-popup__image').src = e.target.src;
-  document.querySelector('.pic-popup__caption').textContent = e.target.nextElementSibling.querySelector('.photo-elements__text').textContent;
+  picPopup.querySelector('.pic-popup__image').src = e.target.src;
+  picPopup.querySelector('.pic-popup__caption').textContent = e.target.nextElementSibling.querySelector('.photo-elements__text').textContent;
   picPopupCloseButton.addEventListener('click', togglePicPopup);
 }
 
