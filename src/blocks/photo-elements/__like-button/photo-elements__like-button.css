@@ -10,6 +10,7 @@
   background-position: center;
   background-size: contain;
   box-sizing: border-box;
+  outline: none;
 }
 
 .photo-elements__like-button:hover {
