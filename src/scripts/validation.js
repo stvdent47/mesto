@@ -1,10 +1,22 @@
+// const showInputError = (formElement, inputElement, errorMessage) => {
+//   const errorElement = formElement.querySelector(`#${inputElement.name}-error`);
+//   inputElement.classList.add('popup__input_type_error');
+//   errorElement.textContent = errorMessage;
+//   errorElement.classList.add('popup__error_visible');
+// }
+
 const formList = Array.from(document.querySelectorAll('.popup__form'));
 
+// const setEventListeners
+
+// const hideInputError
+// const checkInputValidity
+// const changeButtonState
 
 const enableValidation = (object) => {
   formList.forEach((formElement) => {
     formElement.addEventListener('submit', (evt) => {
-      evt.target.preventDefault();
+      evt.preventDefault();
     });
 
     const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
