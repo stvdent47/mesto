@@ -11,6 +11,7 @@
   background-repeat: no-repeat;
   border: none;
   padding: 0;
+  outline: none;
 }
 
 .pic-popup__close-button:hover {

@@ -12,6 +12,7 @@
   background-position: center;
   background-size: contain;
   box-sizing: border-box;
+  outline: none;
 }
 
 .photo-elements__delete-button:hover {
