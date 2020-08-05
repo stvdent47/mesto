@@ -44,10 +44,10 @@
         
         <form action="#" name="form-edit-popup" class="popup__form" method="POST" novalidate>
           <input type="text" name="profile-name" id="profile-name-input" placeholder="Ваше имя" class="popup__input" required minlength="2" maxlength="40" autocomplete="off">
-          <p class='popup__error' id="profile-name-error"></p>
+          <p class='popup__input-error-message' id="profile-name-error"></p>
           
           <input type="text" name="profile-job" id="profile-job-input" placeholder="Ваша профессия" class="popup__input" required minlength="2" maxlength="200" autocomplete="off">
-          <p class='popup__error' id="profile-job-error"></p>
+          <p class='popup__input-error-message' id="profile-job-error"></p>
           
           <button type="submit" class="popup__button">Сохранить</button>
         </form>
@@ -62,10 +62,10 @@
         
         <form action="#" name="form-add-popup" class="popup__form" method="POST" novalidate>
           <input type="text" name="place-name" id="place-name-input" placeholder="Название" class="popup__input" required minlength="1" maxlength="30" autocomplete="off">
-          <p class="popup__error" id="place-name-error"></p>
+          <p class="popup__input-error-message" id="place-name-error"></p>
           
           <input type="url" name="place-link" id="place-link-input" placeholder="Ссылка на картинку" class="popup__input" required>
-          <p class="popup__error" id="place-link-error"></p>
+          <p class="popup__input-error-message" id="place-link-error"></p>
 
           <button type="submit" class="popup__button popup__button_disabled" disabled>Сохранить</button>
         </form>

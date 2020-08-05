@@ -48,28 +48,47 @@ const jobInput = editPopUp.querySelector('#profile-job-input');
 //add-card-form
 const newPhotoElementName = addPopUp.querySelector('#place-name-input');
 const newPhotoElementLink = addPopUp.querySelector('#place-link-input');
-
-const toggleLikeButton = (e) => {
-  e.target.classList.toggle('photo-elements__like-button_active');
-}
-
-const deleteCard = (e) => {
-  e.target.closest('.photo-elements__item').remove();
-}
-
 //picture popup functionaluty
+const closePicPopupByOverlay = (evt) => {
+  if (!evt.target.classList[0].startsWith('pic-popup__')) {
+    picPopup.classList.remove('pic-popup_opened');
+  }
+}
+
+const closePicPopupByEscape = (evt) => {
+  if (evt.key === 'Escape') {
+    picPopup.classList.remove('pic-popup_opened');
+  }
+}
+
 const togglePicPopup = () => {
   picPopup.classList.toggle('pic-popup_opened');
+  if (picPopup.classList.contains('pic-popup_opened')) {
+    document.addEventListener('keydown', (evt) => {
+      closePicPopupByEscape(evt);
+    });
+    picPopup.addEventListener('mousedown', (evt) => {
+      closePicPopupByOverlay(evt);
+    });
+  }
 }
 
-const openCard = (e) => {
+const openCard = (evt) => {
   togglePicPopup();
-  picPopup.querySelector('.pic-popup__image').src = e.target.src;
-  picPopup.querySelector('.pic-popup__caption').textContent = e.target.nextElementSibling.querySelector('.photo-elements__text').textContent;
+  picPopup.querySelector('.pic-popup__image').src = evt.target.src;
+  picPopup.querySelector('.pic-popup__caption').textContent = evt.target.nextElementSibling.querySelector('.photo-elements__text').textContent;
   picPopupCloseButton.addEventListener('click', togglePicPopup);
 }
 
 //card adding functionality
+const toggleLikeButton = (evt) => {
+  evt.target.classList.toggle('photo-elements__like-button_active');
+}
+
+const deleteCard = (evt) => {
+  evt.target.closest('.photo-elements__item').remove();
+}
+
 const createPhotoElement = (caption, imageLink) => {
   const cardElement = cardElementTemplate.cloneNode(true);
   cardElement.querySelector('.photo-elements__image').src = imageLink;
@@ -103,16 +122,33 @@ const toggleEditPopup = (popupToToggle) => {
   togglePopup(popupToToggle);
 }
 
-const editSubmitHandler = (e) => {
-  e.preventDefault();
+const closePopupByEscape = (evt) => {
+  if (evt.key === 'Escape') {
+    const popupList = Array.from(document.querySelectorAll('.popup'));
+    popupList.forEach((popup) => {
+      if (popup.classList.contains('popup_opened')) {
+        togglePopup(popup);
+      }
+    });
+  }
+}
+
+const closePopupByOverlay = (evt) => {
+  if (!evt.target.classList[0].startsWith('popup__')) {
+    togglePopup(evt.target);
+  }
+}
+
+const editSubmitHandler = (evt) => {
+  evt.preventDefault();
 
   nameField.textContent = nameInput.value;
   jobField.textContent = jobInput.value;
   toggleEditPopup(editPopUp);
 }
 
-const addSubmitHandler = (e) => {
-  e.preventDefault();
+const addSubmitHandler = (evt) => {
+  evt.preventDefault();
 
   renderPhoto(createPhotoElement(newPhotoElementName.value, newPhotoElementLink.value));
   addPopUpForm.reset();
@@ -135,3 +171,13 @@ addPopupCloseButton.addEventListener('click', () => {
   togglePopup(addPopUp);
 })
 addPopUpForm.addEventListener('submit', addSubmitHandler);
+//closing popups by esc/overlay
+document.addEventListener('keydown', (evt) => {
+  closePopupByEscape(evt);
+})
+editPopUp.addEventListener('mousedown', (evt) => {
+  closePopupByOverlay(evt);
+});
+addPopUp.addEventListener('mousedown', (evt) => {
+  closePopupByOverlay(evt);
+});
