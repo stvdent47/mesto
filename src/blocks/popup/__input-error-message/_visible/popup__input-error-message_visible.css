@@ -1,4 +1,4 @@
-.popup__error_visible {
+.popup__input-error-message_visible {
   visibility: visible;
   padding: 4px 0 13px;
 }
