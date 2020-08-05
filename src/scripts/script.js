@@ -48,18 +48,29 @@ const jobInput = editPopUp.querySelector('#profile-job-input');
 //add-card-form
 const newPhotoElementName = addPopUp.querySelector('#place-name-input');
 const newPhotoElementLink = addPopUp.querySelector('#place-link-input');
-
-const toggleLikeButton = (evt) => {
-  evt.target.classList.toggle('photo-elements__like-button_active');
-}
-
-const deleteCard = (evt) => {
-  evt.target.closest('.photo-elements__item').remove();
-}
-
 //picture popup functionaluty
+const closePicPopupByOverlay = (evt) => {
+  if (!evt.target.classList[0].startsWith('pic-popup__')) {
+    picPopup.classList.remove('pic-popup_opened');
+  }
+}
+
+const closePicPopupByEscape = (evt) => {
+  if (evt.key === 'Escape') {
+    picPopup.classList.remove('pic-popup_opened');
+  }
+}
+
 const togglePicPopup = () => {
   picPopup.classList.toggle('pic-popup_opened');
+  if (picPopup.classList.contains('pic-popup_opened')) {
+    document.addEventListener('keydown', (evt) => {
+      closePicPopupByEscape(evt);
+    });
+    picPopup.addEventListener('mousedown', (evt) => {
+      closePicPopupByOverlay(evt);
+    });
+  }
 }
 
 const openCard = (evt) => {
@@ -70,6 +81,14 @@ const openCard = (evt) => {
 }
 
 //card adding functionality
+const toggleLikeButton = (evt) => {
+  evt.target.classList.toggle('photo-elements__like-button_active');
+}
+
+const deleteCard = (evt) => {
+  evt.target.closest('.photo-elements__item').remove();
+}
+
 const createPhotoElement = (caption, imageLink) => {
   const cardElement = cardElementTemplate.cloneNode(true);
   cardElement.querySelector('.photo-elements__image').src = imageLink;
@@ -156,9 +175,9 @@ addPopUpForm.addEventListener('submit', addSubmitHandler);
 document.addEventListener('keydown', (evt) => {
   closePopupByEscape(evt);
 })
-editPopUp.addEventListener('click', (evt) => {
+editPopUp.addEventListener('mousedown', (evt) => {
   closePopupByOverlay(evt);
 });
-addPopUp.addEventListener('click', (evt) => {
+addPopUp.addEventListener('mousedown', (evt) => {
   closePopupByOverlay(evt);
 });
