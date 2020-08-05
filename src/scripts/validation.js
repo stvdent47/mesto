@@ -49,12 +49,8 @@ const setEventListeners = (formElement, settings) => {
 }
 //validation for all the forms
 const enableValidation = (settings) => {
-  //reset default submit and validation behavior
   const formList = Array.from(document.querySelectorAll(settings.formSelector));
   formList.forEach((formElement) => {
-    formElement.addEventListener('submit', (evt) => {
-      evt.preventDefault();
-    });
     setEventListeners(formElement, settings);
   });
 }
