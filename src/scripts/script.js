@@ -1,5 +1,4 @@
-
-//main elemen
+//main elements
 const popUp = document.querySelector('.popup');
 const editPopUp = document.querySelector('.edit-popup');
 const addPopUp = document.querySelector('.add-popup');
@@ -27,6 +26,8 @@ const jobInputError = editPopUp.querySelector('#profile-job-error');
 //add-card-form
 const addCardInputName = addPopUp.querySelector('#place-name-input');
 const addCardInputLink = addPopUp.querySelector('#place-link-input');
+const addCardInputNameError = addPopUp.querySelector('#place-name-error');
+const addCardInputLinkError = addPopUp.querySelector('#place-link-error');
 //picture popup functionaluty
 const closePicPopupByOverlay = (evt) => {
   if (evt.target.classList.contains('pic-popup_opened')) {
@@ -93,19 +94,23 @@ initialCards.forEach((card) => {
 const togglePopup = (popupToToggle) => {
   popupToToggle.classList.toggle('popup_opened');
 
-  if (editPopUp.classList.contains('popup_opened')) {
+  if (popupToToggle.classList.contains('popup_opened')) {
     document.addEventListener('keydown', closePopupByEscape);
   } else {
     document.removeEventListener('keydown', closePopupByEscape);
   }
 }
 
+const resetInputError = (inputElement, inputElementError) => {
+  inputElementError.textContent = '';
+  inputElementError.classList.remove('popup__input-error-message_visible');
+  inputElement.classList.remove('popup__input_type_error');
+}
+
 const togglePopupInputError = (popup, inputElement) => {
   const inputElementError = popup.querySelector(`#${inputElement.name}-error`);
   if (inputElement.value.length > 0) {
-    inputElementError.textContent = '';
-    inputElementError.classList.remove('popup__input-error-message_visible');
-    inputElement.classList.remove('popup__input_type_error');
+    resetInputError(inputElement, inputElementError);
   }
 }
 const closePopupByEscape = () => {
@@ -135,8 +140,17 @@ const toggleEditPopup = () => {
 }
 
 const toggleAddPopup = () => {
-  togglePopupInputError(addPopUp, addCardInputName);
+  // togglePopupInputError(addPopUp, addCardInputName);
   togglePopup(addPopUp);
+
+  if (addPopUp.classList.contains('popup_opened')) {
+    if (!addCardInputName.value.length) {
+      resetInputError(addCardInputName, addCardInputNameError)
+    }
+    if (!addCardInputLink.value.length) {
+      resetInputError(addCardInputLink, addCardInputLinkError)
+    }
+  }
 }
 
 const closePopupByOverlay = (evt) => {
@@ -184,7 +198,7 @@ addPopupCloseButton.addEventListener('click', () => {
   togglePopup(addPopUp);
 })
 addPopUpForm.addEventListener('submit', addSubmitHandler);
-//closing popups by esc/overlay
+//closing popups overlay
 editPopUp.addEventListener('mousedown', (evt) => {
   closePopupByOverlay(evt);
 });
