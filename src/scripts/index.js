@@ -35,21 +35,21 @@ const closePicPopupByOverlay = (evt) => {
   }
 }
 
-const closePicPopupByEscape = (evt) => {
-  if (evt.key === 'Escape') {
+const closePicPopupByEscape = () => {
+  if (event.key === 'Escape') {
     picPopup.classList.remove('pic-popup_opened');
+    document.removeEventListener('keydown', closePicPopupByEscape);
   }
 }
 
 const togglePicPopup = () => {
   picPopup.classList.toggle('pic-popup_opened');
+  
   if (picPopup.classList.contains('pic-popup_opened')) {
-    document.addEventListener('keydown', (evt) => {
-      closePicPopupByEscape(evt);
-    });
     picPopup.addEventListener('mousedown', (evt) => {
       closePicPopupByOverlay(evt);
     });
+    document.addEventListener('keydown', closePicPopupByEscape);
   }
 }
 
