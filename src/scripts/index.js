@@ -115,7 +115,6 @@ const togglePopupInputError = (popup, inputElement) => {
 }
 const closePopupByEscape = () => {
   if (event.key === 'Escape') {
-    alert('dsa')
     const popupList = Array.from(document.querySelectorAll('.popup'));
     popupList.forEach((popup) => {
       if (popup.classList.contains('popup_opened')) {
