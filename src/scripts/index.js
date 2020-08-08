@@ -35,8 +35,8 @@ const closePicPopupByOverlay = (evt) => {
   }
 }
 
-const closePicPopupByEscape = () => {
-  if (event.key === 'Escape') {
+const closePicPopupByEscape = (evt) => {
+  if (evt.key === 'Escape') {
     picPopup.classList.remove('pic-popup_opened');
     document.removeEventListener('keydown', closePicPopupByEscape);
   }
@@ -113,8 +113,13 @@ const togglePopupInputError = (popup, inputElement) => {
     resetInputError(inputElement, inputElementError);
   }
 }
-const closePopupByEscape = () => {
-  if (event.key === 'Escape') {
+
+const setEventListenerForEsc = () => {
+
+}
+
+const closePopupByEscape = (evt) => {
+  if (evt.key === 'Escape') {
     const popupList = Array.from(document.querySelectorAll('.popup'));
     popupList.forEach((popup) => {
       if (popup.classList.contains('popup_opened')) {
