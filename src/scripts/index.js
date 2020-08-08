@@ -6,13 +6,13 @@ const editPopUpForm = editPopUp.querySelector('.popup__form');
 const addPopUpForm = addPopUp.querySelector('.popup__form');
 const cardElementsList = document.querySelector('.photo-elements__list');
 const picPopup = document.querySelector('.pic-popup');
-//buttons & etc.
-const editButton = document.querySelector('.profile__edit-button');
-const addButton = document.querySelector('.profile__add-button');
-const editSaveButton = editPopUp.querySelector('.popup__button');
-const addSaveButton = addPopUp.querySelector('.popup__button');
 const cardElementTemplate = document.querySelector('#photo-elements-template').content;
+//buttons
+const openEditPopupButton = document.querySelector('.profile__edit-button');
+const editPopupSaveButton = editPopUp.querySelector('.popup__button');
 const editPopupCloseButton = editPopUp.querySelector('.popup__close-button');
+const openAddPopupButton = document.querySelector('.profile__add-button');
+const addPopupSaveButton = addPopUp.querySelector('.popup__button');
 const addPopupCloseButton = addPopUp.querySelector('.popup__close-button');
 const picPopupCloseButton = picPopup.querySelector('.pic-popup__close-button');
 //fields
@@ -114,10 +114,6 @@ const togglePopupInputError = (popup, inputElement) => {
   }
 }
 
-const setEventListenerForEsc = () => {
-
-}
-
 const closePopupByEscape = (evt) => {
   if (evt.key === 'Escape') {
     const popupList = Array.from(document.querySelectorAll('.popup'));
@@ -139,13 +135,12 @@ const toggleEditPopup = () => {
   togglePopupInputError(editPopUp, jobInput);
   
   if (nameInput.validity.valid && jobInput.validity.valid) {
-    editSaveButton.disabled = false;
-    editSaveButton.classList.remove('popup__button_disabled');
+    editPopupSaveButton.disabled = false;
+    editPopupSaveButton.classList.remove('popup__button_disabled');
   }
 }
 
 const toggleAddPopup = () => {
-  // togglePopupInputError(addPopUp, addCardInputName);
   togglePopup(addPopUp);
 
   if (addPopUp.classList.contains('popup_opened')) {
@@ -183,27 +178,20 @@ const addSubmitHandler = (evt) => {
   renderPhoto(createPhotoElement(addCardInputName.value, addCardInputLink.value));
   addPopUpForm.reset();
   togglePopup(addPopUp);
-  const submitButton = addPopUpForm.querySelector('.popup__button');
-  disableButton(submitButton, 'popup__button_disabled')
+  disableButton(addPopupSaveButton, 'popup__button_disabled')
 }
 //eventListeners
 //profileEditing
-editButton.addEventListener('click', () => {
-  toggleEditPopup();
-});
-editPopupCloseButton.addEventListener('click', () => {
-  toggleEditPopup();
-});
+openEditPopupButton.addEventListener('click', toggleEditPopup);
+editPopupCloseButton.addEventListener('click', toggleEditPopup);
 editPopUpForm.addEventListener('submit', editSubmitHandler);
 //cardAdding
-addButton.addEventListener('click', () => {
-  toggleAddPopup();
-});
+openAddPopupButton.addEventListener('click', toggleAddPopup);
 addPopupCloseButton.addEventListener('click', () => {
   togglePopup(addPopUp);
 })
 addPopUpForm.addEventListener('submit', addSubmitHandler);
-//closing popups overlay
+//closing popups by overlay
 editPopUp.addEventListener('mousedown', (evt) => {
   closePopupByOverlay(evt);
 });
