@@ -1,63 +1,63 @@
 //main elements
-const popUp = document.querySelector('.popup');
-const editPopUp = document.querySelector('.edit-popup');
-const addPopUp = document.querySelector('.add-popup');
-const editPopUpForm = editPopUp.querySelector('.popup__form');
-const addPopUpForm = addPopUp.querySelector('.popup__form');
+const modal = document.querySelector('.modal');
+const editModal = document.querySelector('.edit-modal');
+const addModal = document.querySelector('.add-modal');
+const editModalForm = editModal.querySelector('.modal__form');
+const addModalForm = addModal.querySelector('.modal__form');
 const cardElementsList = document.querySelector('.photo-elements__list');
-const picPopup = document.querySelector('.pic-popup');
+const picModal = document.querySelector('.pic-modal');
 const cardElementTemplate = document.querySelector('#photo-elements-template').content;
 //buttons
-const openEditPopupButton = document.querySelector('.profile__edit-button');
-const editPopupSaveButton = editPopUp.querySelector('.popup__button');
-const editPopupCloseButton = editPopUp.querySelector('.popup__close-button');
-const openAddPopupButton = document.querySelector('.profile__add-button');
-const addPopupSaveButton = addPopUp.querySelector('.popup__button');
-const addPopupCloseButton = addPopUp.querySelector('.popup__close-button');
-const picPopupCloseButton = picPopup.querySelector('.pic-popup__close-button');
+const openeditModalButton = document.querySelector('.profile__edit-button');
+const editModalSaveButton = editModal.querySelector('.modal__button');
+const editModalCloseButton = editModal.querySelector('.modal__close-button');
+const openaddModalButton = document.querySelector('.profile__add-button');
+const addModalSaveButton = addModal.querySelector('.modal__button');
+const addModalCloseButton = addModal.querySelector('.modal__close-button');
+const picModalCloseButton = picModal.querySelector('.pic-modal__close-button');
 //fields
 //edit-form
 const nameField = document.querySelector('.profile__name');
-const jobField = document.querySelector('.profile__job');
-const nameInput = editPopUp.querySelector('#profile-name-input');
-const jobInput = editPopUp.querySelector('#profile-job-input');
-const nameInputError = editPopUp.querySelector('#profile-name-error');
-const jobInputError = editPopUp.querySelector('#profile-job-error');
+const jobField = document.querySelector('.profile__description');
+const nameInput = editModal.querySelector('#profile-name-input');
+const jobInput = editModal.querySelector('#profile-job-input');
+const nameInputError = editModal.querySelector('#profile-name-error');
+const jobInputError = editModal.querySelector('#profile-job-error');
 //add-card-form
-const addCardInputName = addPopUp.querySelector('#place-name-input');
-const addCardInputLink = addPopUp.querySelector('#place-link-input');
-const addCardInputNameError = addPopUp.querySelector('#place-name-error');
-const addCardInputLinkError = addPopUp.querySelector('#place-link-error');
-//picture popup functionaluty
-const closePicPopupByOverlay = (evt) => {
-  if (evt.target.classList.contains('pic-popup_opened')) {
-    picPopup.classList.remove('pic-popup_opened');
+const addCardInputName = addModal.querySelector('#place-name-input');
+const addCardInputLink = addModal.querySelector('#place-link-input');
+const addCardInputNameError = addModal.querySelector('#place-name-error');
+const addCardInputLinkError = addModal.querySelector('#place-link-error');
+//picture modal functionaluty
+const closepicModalByOverlay = (evt) => {
+  if (evt.target.classList.contains('pic-modal_opened')) {
+    picModal.classList.remove('pic-modal_opened');
   }
 }
 
-const closePicPopupByEscape = (evt) => {
+const closepicModalByEscape = (evt) => {
   if (evt.key === 'Escape') {
-    picPopup.classList.remove('pic-popup_opened');
-    document.removeEventListener('keydown', closePicPopupByEscape);
+    picModal.classList.remove('pic-modal_opened');
+    document.removeEventListener('keydown', closepicModalByEscape);
   }
 }
 
-const togglePicPopup = () => {
-  picPopup.classList.toggle('pic-popup_opened');
+const togglepicModal = () => {
+  picModal.classList.toggle('pic-modal_opened');
   
-  if (picPopup.classList.contains('pic-popup_opened')) {
-    picPopup.addEventListener('mousedown', (evt) => {
-      closePicPopupByOverlay(evt);
+  if (picModal.classList.contains('pic-modal_opened')) {
+    picModal.addEventListener('mousedown', (evt) => {
+      closepicModalByOverlay(evt);
     });
-    document.addEventListener('keydown', closePicPopupByEscape);
+    document.addEventListener('keydown', closepicModalByEscape);
   }
 }
 
 const openCard = (evt) => {
-  togglePicPopup();
-  picPopup.querySelector('.pic-popup__image').src = evt.target.src;
-  picPopup.querySelector('.pic-popup__caption').textContent = evt.target.nextElementSibling.querySelector('.photo-elements__text').textContent;
-  picPopupCloseButton.addEventListener('click', togglePicPopup);
+  togglepicModal();
+  picModal.querySelector('.pic-modal__image').src = evt.target.src;
+  picModal.querySelector('.pic-modal__caption').textContent = evt.target.nextElementSibling.querySelector('.photo-elements__text').textContent;
+  picModalCloseButton.addEventListener('click', togglepicModal);
 }
 
 //card adding functionality
@@ -90,60 +90,60 @@ initialCards.forEach((card) => {
   renderPhoto(createPhotoElement(card.name, card.link));
 })
 
-//popups functionality
-const togglePopup = (popupToToggle) => {
-  popupToToggle.classList.toggle('popup_opened');
+//modals functionality
+const toggleModal = (modalToToggle) => {
+  modalToToggle.classList.toggle('modal_opened');
 
-  if (popupToToggle.classList.contains('popup_opened')) {
-    document.addEventListener('keydown', closePopupByEscape);
+  if (modalToToggle.classList.contains('modal_opened')) {
+    document.addEventListener('keydown', closeModalByEsc);
   } else {
-    document.removeEventListener('keydown', closePopupByEscape);
+    document.removeEventListener('keydown', closeModalByEsc);
   }
 }
 
 const resetInputError = (inputElement, inputElementError) => {
   inputElementError.textContent = '';
-  inputElementError.classList.remove('popup__input-error-message_visible');
-  inputElement.classList.remove('popup__input_type_error');
+  inputElementError.classList.remove('modal__input-error-message_visible');
+  inputElement.classList.remove('modal__input_type_error');
 }
 
-const togglePopupInputError = (popup, inputElement) => {
-  const inputElementError = popup.querySelector(`#${inputElement.name}-error`);
+const toggleModalInputError = (modal, inputElement) => {
+  const inputElementError = modal.querySelector(`#${inputElement.name}-error`);
   if (inputElement.value.length > 0) {
     resetInputError(inputElement, inputElementError);
   }
 }
 
-const closePopupByEscape = (evt) => {
+const closeModalByEsc = (evt) => {
   if (evt.key === 'Escape') {
-    const popupList = Array.from(document.querySelectorAll('.popup'));
-    popupList.forEach((popup) => {
-      if (popup.classList.contains('popup_opened')) {
-        togglePopup(popup);
+    const modalList = Array.from(document.querySelectorAll('.modal'));
+    modalList.forEach((modal) => {
+      if (modal.classList.contains('modal_opened')) {
+        toggleModal(modal);
       }
     });
   }
 }
 
-const toggleEditPopup = () => {
-  togglePopup(editPopUp);
+const toggleeditModal = () => {
+  toggleModal(editModal);
   
   nameInput.value = nameField.textContent;
   jobInput.value = jobField.textContent;
   
-  togglePopupInputError(editPopUp, nameInput);
-  togglePopupInputError(editPopUp, jobInput);
+  toggleModalInputError(editModal, nameInput);
+  toggleModalInputError(editModal, jobInput);
   
   if (nameInput.validity.valid && jobInput.validity.valid) {
-    editPopupSaveButton.disabled = false;
-    editPopupSaveButton.classList.remove('popup__button_disabled');
+    editModalSaveButton.disabled = false;
+    editModalSaveButton.classList.remove('modal__button_disabled');
   }
 }
 
-const toggleAddPopup = () => {
-  togglePopup(addPopUp);
+const toggleaddModal = () => {
+  toggleModal(addModal);
 
-  if (addPopUp.classList.contains('popup_opened')) {
+  if (addModal.classList.contains('modal_opened')) {
     if (!addCardInputName.value.length) {
       resetInputError(addCardInputName, addCardInputNameError)
     }
@@ -153,9 +153,9 @@ const toggleAddPopup = () => {
   }
 }
 
-const closePopupByOverlay = (evt) => {
-  if (evt.target.classList.contains('popup_opened')) {
-    togglePopup(evt.target);
+const closeModalByOverlay = (evt) => {
+  if (evt.target.classList.contains('modal_opened')) {
+    toggleModal(evt.target);
   }
 }
 
@@ -164,37 +164,42 @@ const editSubmitHandler = (evt) => {
 
   nameField.textContent = nameInput.value;
   jobField.textContent = jobInput.value;
-  toggleEditPopup(editPopUp);
+  toggleeditModal(editModal);
 }
 
-const disableButton = (buttonElement, classToAdd) => {
-  buttonElement.disabled = true;
-  buttonElement.classList.add(classToAdd);
+const setButtonState = (buttonElement, classElement, state) => {
+  if (state) {
+    buttonElement.disabled = false;
+    buttonElement.classList.remove(classElement);
+  } else {
+    buttonElement.disabled = true;
+    buttonElement.classList.add(classElement);
+  }
 }
 
 const addSubmitHandler = (evt) => {
   evt.preventDefault();
 
   renderPhoto(createPhotoElement(addCardInputName.value, addCardInputLink.value));
-  addPopUpForm.reset();
-  togglePopup(addPopUp);
-  disableButton(addPopupSaveButton, 'popup__button_disabled')
+  addModalForm.reset();
+  toggleModal(addModal);
+  setButtonState(addModalSaveButton, 'modal__button_disabled', false);
 }
 //eventListeners
 //profileEditing
-openEditPopupButton.addEventListener('click', toggleEditPopup);
-editPopupCloseButton.addEventListener('click', toggleEditPopup);
-editPopUpForm.addEventListener('submit', editSubmitHandler);
+openeditModalButton.addEventListener('click', toggleeditModal);
+editModalCloseButton.addEventListener('click', toggleeditModal);
+editModalForm.addEventListener('submit', editSubmitHandler);
 //cardAdding
-openAddPopupButton.addEventListener('click', toggleAddPopup);
-addPopupCloseButton.addEventListener('click', () => {
-  togglePopup(addPopUp);
+openaddModalButton.addEventListener('click', toggleaddModal);
+addModalCloseButton.addEventListener('click', () => {
+  toggleModal(addModal);
 })
-addPopUpForm.addEventListener('submit', addSubmitHandler);
-//closing popups by overlay
-editPopUp.addEventListener('mousedown', (evt) => {
-  closePopupByOverlay(evt);
+addModalForm.addEventListener('submit', addSubmitHandler);
+//closing modals by overlay
+editModal.addEventListener('mousedown', (evt) => {
+  closeModalByOverlay(evt);
 });
-addPopUp.addEventListener('mousedown', (evt) => {
-  closePopupByOverlay(evt);
+addModal.addEventListener('mousedown', (evt) => {
+  closeModalByOverlay(evt);
 });
