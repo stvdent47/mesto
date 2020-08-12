@@ -8,7 +8,7 @@
 @import url(../blocks/photo-elements/photo-elements.css);
 @import url(../blocks/photo-elements/__like-button/_active/photo-elements__like-button_active.css);
 @import url(../blocks/footer/footer.css);
-@import url(../blocks/popup/popup.css);
-@import url(../blocks/popup/_opened/popup_opened.css);
-@import url(../blocks/pic-popup/pic-popup.css);
-@import url(../blocks/pic-popup/_opened/pic-popup_opened.css);
+@import url(../blocks/modal/modal.css);
+@import url(../blocks/modal/_opened/modal_opened.css);
+@import url(../blocks/pic-modal/pic-modal.css);
+@import url(../blocks/pic-modal/_opened/pic-modal_opened.css);
