@@ -167,9 +167,14 @@ const editSubmitHandler = (evt) => {
   toggleeditModal(editModal);
 }
 
-const disableButton = (buttonElement, classToAdd) => {
-  buttonElement.disabled = true;
-  buttonElement.classList.add(classToAdd);
+const setButtonState = (buttonElement, classElement, state) => {
+  if (state) {
+    buttonElement.disabled = false;
+    buttonElement.classList.remove(classElement);
+  } else {
+    buttonElement.disabled = true;
+    buttonElement.classList.add(classElement);
+  }
 }
 
 const addSubmitHandler = (evt) => {
@@ -178,7 +183,7 @@ const addSubmitHandler = (evt) => {
   renderPhoto(createPhotoElement(addCardInputName.value, addCardInputLink.value));
   addModalForm.reset();
   toggleModal(addModal);
-  disableButton(addModalSaveButton, 'modal__button_disabled')
+  setButtonState(addModalSaveButton, 'modal__button_disabled', false);
 }
 //eventListeners
 //profileEditing

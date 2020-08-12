@@ -56,10 +56,10 @@ const enableValidation = (settings) => {
 }
 
 enableValidation({
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error-message_visible'
+  formSelector: '.modal__form',
+  inputSelector: '.modal__input',
+  submitButtonSelector: '.modal__button',
+  inactiveButtonClass: 'modal__button_disabled',
+  inputErrorClass: 'modal__input_type_error',
+  errorClass: 'modal__input-error-message_visible'
 });
