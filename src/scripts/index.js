@@ -18,7 +18,7 @@ const picModalCloseButton = picModal.querySelector('.pic-modal__close-button');
 //fields
 //edit-form
 const nameField = document.querySelector('.profile__name');
-const jobField = document.querySelector('.profile__job');
+const jobField = document.querySelector('.profile__description');
 const nameInput = editModal.querySelector('#profile-name-input');
 const jobInput = editModal.querySelector('#profile-job-input');
 const nameInputError = editModal.querySelector('#profile-name-error');

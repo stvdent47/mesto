@@ -1,4 +1,4 @@
-.profile__job {
+.profile__description {
   max-width: 550px;
   color: #fff;
   font-style: normal;
@@ -12,13 +12,13 @@
 }
 
 @media all and (max-width: 900px) {
-  .profile__job {
+  .profile__description {
     max-width: 350px;
   }
 }
 
 @media all and (max-width: 650px) {
-  .profile__job {
+  .profile__description {
     font-size: 14px;
     line-height: 17px;
     text-align: center;
