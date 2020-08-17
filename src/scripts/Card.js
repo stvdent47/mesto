@@ -3,7 +3,7 @@ import { togglePicModal } from './utils.js';
 const picModal = document.querySelector('.pic-modal');
 const picModalCloseButton = picModal.querySelector('.pic-modal__close-button');
 
-export class Card {
+export default class Card {
   constructor(data, templateSelector) {
     this._caption = data.name;
     this._imageLink = data.link;

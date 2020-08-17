@@ -1,5 +1,5 @@
-import { Card } from './Card.js';
-import { FormValidator } from './FormValidator.js';
+import Card from './Card.js';
+import FormValidator from './FormValidator.js';
 
 //main elements
 const editModal = document.querySelector('.edit-modal');
@@ -127,12 +127,26 @@ const addSubmitHandler = (evt) => {
     link: addCardInputLink.value
   }
 
-  const newCard = new Card( newItem , cardElementTemplate)._createCard();
+  const newCard = new Card(newItem , cardElementTemplate)._createCard();
   cardElementsList.prepend(newCard);
   addModalForm.reset();
   toggleModal(addModal);
   setButtonState(addModalSaveButton, 'modal__button_disabled', false);
 }
+
+const validationSettings = {
+    formSelector: '.modal__form',
+    inputSelector: '.modal__input',
+    submitButtonSelector: '.modal__button',
+    inactiveButtonClass: 'modal__button_disabled',
+    inputErrorClass: 'modal__input_type_error',
+    errorClass: 'modal__input-error-message_visible'
+  };
+//forms validation
+const profileFormValidator = new FormValidator(validationSettings, editModalForm);
+const addFormValidator = new FormValidator(validationSettings, addModalForm);
+profileFormValidator.enableValidation();
+addFormValidator.enableValidation();
 //eventListeners
 //profileEditing
 openeditModalButton.addEventListener('click', toggleEditModal);
