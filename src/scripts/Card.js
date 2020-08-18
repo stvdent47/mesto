@@ -25,13 +25,13 @@ export default class Card {
     picModalCloseButton.addEventListener('click', togglePicModal);
   }
 
-  _setEventListeners() {
+  _setEventListeners = () => {
     this._card.querySelector('.photo-elements__like-button').addEventListener('click', this._toggleLikeButton);
     this._card.querySelector('.photo-elements__delete-button').addEventListener('click', this._deleteCard);
     this._card.querySelector('.photo-elements__image').addEventListener('click', this._openCard);
   }
   
-  _createCard() {
+  createCard = () => {
     this._card = this._templateSelector.cloneNode(true);
     this._card.querySelector('.photo-elements__text').textContent = this._caption;
     this._card.querySelector('.photo-elements__image').src = this._imageLink;

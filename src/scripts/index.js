@@ -28,10 +28,19 @@ const addCardInputNameError = addModal.querySelector('#place-name-error');
 const addCardInputLinkError = addModal.querySelector('#place-link-error');
 //rendering initial cards
 initialCards.forEach((item) => {
-  const newCard = new Card(item, cardElementTemplate)._createCard();
+  const newCard = new Card(item, cardElementTemplate).createCard();
   cardElementsList.prepend(newCard);
-})
+});
 
+const setButtonState = (buttonElement, classElement, state) => {
+  if (state) {
+    buttonElement.disabled = false;
+    buttonElement.classList.remove(classElement);
+  } else {
+    buttonElement.disabled = true;
+    buttonElement.classList.add(classElement);
+  }
+}
 //modals functionality
 const toggleModal = (modalToToggle) => {
   modalToToggle.classList.toggle('modal_opened');
@@ -55,7 +64,7 @@ const toggleModalInputError = (modal, inputElement) => {
     resetInputError(inputElement, inputElementError);
   }
 }
-
+//closing an active modal if escape key is pressed
 const closeModalByEsc = (evt) => {
   if (evt.key === 'Escape') {
     const modalList = Array.from(document.querySelectorAll('.modal'));
@@ -66,7 +75,14 @@ const closeModalByEsc = (evt) => {
     });
   }
 }
-
+//closing an active modal if clicked outside the modal
+const closeModalByOverlay = (evt) => {
+  if (evt.target.classList.contains('modal_opened')) {
+    toggleModal(evt.target);
+  }
+}
+//modals toggling functions
+//toggling profile editing modal
 const toggleEditModal = () => {
   toggleModal(editModal);
   
@@ -81,7 +97,7 @@ const toggleEditModal = () => {
     editModalSaveButton.classList.remove('modal__button_disabled');
   }
 }
-
+//toggling new card adding modal
 const toggleAddModal = () => {
   toggleModal(addModal);
 
@@ -94,13 +110,8 @@ const toggleAddModal = () => {
     }
   }
 }
-
-const closeModalByOverlay = (evt) => {
-  if (evt.target.classList.contains('modal_opened')) {
-    toggleModal(evt.target);
-  }
-}
-
+//modals submit handlers
+//profile editing
 const editSubmitHandler = (evt) => {
   evt.preventDefault();
 
@@ -108,17 +119,7 @@ const editSubmitHandler = (evt) => {
   jobField.textContent = jobInput.value;
   toggleEditModal(editModal);
 }
-
-const setButtonState = (buttonElement, classElement, state) => {
-  if (state) {
-    buttonElement.disabled = false;
-    buttonElement.classList.remove(classElement);
-  } else {
-    buttonElement.disabled = true;
-    buttonElement.classList.add(classElement);
-  }
-}
-
+//new card creating
 const addSubmitHandler = (evt) => {
   evt.preventDefault();
 
@@ -127,13 +128,13 @@ const addSubmitHandler = (evt) => {
     link: addCardInputLink.value
   }
 
-  const newCard = new Card(newItem , cardElementTemplate)._createCard();
+  const newCard = new Card(newItem , cardElementTemplate).createCard();
   cardElementsList.prepend(newCard);
   addModalForm.reset();
   toggleModal(addModal);
   setButtonState(addModalSaveButton, 'modal__button_disabled', false);
 }
-
+//forms validation
 const validationSettings = {
     formSelector: '.modal__form',
     inputSelector: '.modal__input',
@@ -141,16 +142,18 @@ const validationSettings = {
     inactiveButtonClass: 'modal__button_disabled',
     inputErrorClass: 'modal__input_type_error',
     errorClass: 'modal__input-error-message_visible'
-  };
-//forms validation
-const profileFormValidator = new FormValidator(validationSettings, editModalForm);
-const addFormValidator = new FormValidator(validationSettings, addModalForm);
-profileFormValidator.enableValidation();
-addFormValidator.enableValidation();
+};
+
+const editFormValidator = new FormValidator(validationSettings, editModalForm);
+const addCardFormValidator = new FormValidator(validationSettings, addModalForm);
+editFormValidator.enableValidation();
+addCardFormValidator.enableValidation();
 //eventListeners
 //profileEditing
 openeditModalButton.addEventListener('click', toggleEditModal);
-editModalCloseButton.addEventListener('click', toggleEditModal);
+editModalCloseButton.addEventListener('click', () => {
+  toggleModal(editModal);
+});
 editModalForm.addEventListener('submit', editSubmitHandler);
 //cardAdding
 openaddModalButton.addEventListener('click', toggleAddModal);
