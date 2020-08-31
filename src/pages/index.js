@@ -1,36 +1,21 @@
-import Card from './Card.js';
-import FormValidator from './FormValidator.js';
-
-//main elements
-const editModal = document.querySelector('.edit-modal');
-const addModal = document.querySelector('.add-modal');
-const editModalForm = editModal.querySelector('.modal__form');
-const addModalForm = addModal.querySelector('.modal__form');
-const cardElementsList = document.querySelector('.photo-elements__list');
-const cardElementTemplate = document.querySelector('#photo-elements-template').content;
-//buttons
-const openeditModalButton = document.querySelector('.profile__edit-button');
-const editModalSaveButton = editModal.querySelector('.modal__button');
-const editModalCloseButton = editModal.querySelector('.modal__close-button');
-const openaddModalButton = document.querySelector('.profile__add-button');
-const addModalSaveButton = addModal.querySelector('.modal__button');
-const addModalCloseButton = addModal.querySelector('.modal__close-button');
-//fields
-//edit-form
-const nameField = document.querySelector('.profile__name');
-const jobField = document.querySelector('.profile__description');
-const nameInput = editModal.querySelector('#profile-name-input');
-const jobInput = editModal.querySelector('#profile-job-input');
-//add-card-form
-const addCardInputName = addModal.querySelector('#place-name-input');
-const addCardInputLink = addModal.querySelector('#place-link-input');
-const addCardInputNameError = addModal.querySelector('#place-name-error');
-const addCardInputLinkError = addModal.querySelector('#place-link-error');
+import { editModal, addModal, editModalForm, addModalForm, cardElementsList, cardElementTemplate, openeditModalButton, editModalSaveButton, editModalCloseButton, openaddModalButton, addModalSaveButton, addModalCloseButton, nameField, jobField, nameInput, jobInput, addCardInputName, addCardInputLink, addCardInputNameError, addCardInputLinkError } from '../utils/constants.js';
+import { initialCards } from '../components/initialCards.js';
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
+import Section from '../components/Section.js';
 //rendering initial cards
-initialCards.forEach((item) => {
-  const newCard = new Card(item, cardElementTemplate).createCard();
-  cardElementsList.prepend(newCard);
-});
+// initialCards.forEach((item) => {
+//   const newCard = new Card(item, cardElementTemplate).createCard();
+//   cardElementsList.prepend(newCard);
+// });
+const initialCardsToRender = new Section ({
+  items: initialCards,
+  renderer: (cardItem) => {
+    const card = new Card(cardItem, cardElementTemplate).createCard();
+    initialCardsToRender.addItem(card);
+  }
+}, cardElementsList);
+initialCardsToRender.renderItems();
 
 const setButtonState = (buttonElement, classElement, state) => {
   if (state) {
@@ -93,8 +78,7 @@ const toggleEditModal = () => {
   toggleModalInputError(editModal, jobInput);
   
   if (nameInput.validity.valid && jobInput.validity.valid) {
-    editModalSaveButton.disabled = false;
-    editModalSaveButton.classList.remove('modal__button_disabled');
+    setButtonState(editModalSaveButton, 'modal__button_disabled', true);
   }
 }
 //toggling new card adding modal

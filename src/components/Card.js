@@ -1,7 +1,5 @@
-import { togglePicModal } from './utils.js';
-
-const picModal = document.querySelector('.pic-modal');
-const picModalCloseButton = picModal.querySelector('.pic-modal__close-button');
+import { togglePicModal } from '../utils/utils.js';
+import { picModal, picModalCloseButton } from '../utils/constants.js';
 
 export default class Card {
   constructor(data, templateSelector) {
