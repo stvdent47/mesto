@@ -14,12 +14,13 @@ const closePicModalByOverlay = (evt) => {
 }
 
 export const togglePicModal = () => {
-  picModal.classList.toggle('pic-modal_opened');
+  console.log('fsdsd')
+  // picModal.classList.toggle('pic-modal_opened');
   
-  if (picModal.classList.contains('pic-modal_opened')) {
-    picModal.addEventListener('mousedown', (evt) => {
-      closePicModalByOverlay(evt);
-    });
-    document.addEventListener('keydown', closePicModalByEsc);
-  }
+  // if (picModal.classList.contains('pic-modal_opened')) {
+  //   picModal.addEventListener('mousedown', (evt) => {
+  //     closePicModalByOverlay(evt);
+  //   });
+  //   document.addEventListener('keydown', closePicModalByEsc);
+  // }
 }

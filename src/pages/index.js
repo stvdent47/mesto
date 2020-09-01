@@ -1,17 +1,24 @@
-import { editModal, addModal, editModalForm, addModalForm, cardElementsList, cardElementTemplate, openeditModalButton, editModalSaveButton, editModalCloseButton, openaddModalButton, addModalSaveButton, addModalCloseButton, nameField, jobField, nameInput, jobInput, addCardInputName, addCardInputLink, addCardInputNameError, addCardInputLinkError } from '../utils/constants.js';
+import { editModal, addModal, editModalForm, addModalForm, cardElementsList, cardElementTemplate, openEditModalButton, editModalSaveButton, editModalCloseButton, openaddModalButton, addModalSaveButton, addModalCloseButton, nameField, jobField, nameInput, jobInput, addCardInputName, addCardInputLink, addCardInputNameError, addCardInputLinkError } from '../utils/constants.js';
 import { initialCards } from '../components/initialCards.js';
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
+import Modal from '../components/Modal.js';
+import ModalWithImage from '../components/ModalWithImage.js';
+
+const newModalWithImage = new ModalWithImage('.pic-modal');
+newModalWithImage.setEventListeners();
 //rendering initial cards
-// initialCards.forEach((item) => {
-//   const newCard = new Card(item, cardElementTemplate).createCard();
-//   cardElementsList.prepend(newCard);
-// });
 const initialCardsToRender = new Section ({
   items: initialCards,
   renderer: (cardItem) => {
-    const card = new Card(cardItem, cardElementTemplate).createCard();
+    const card = new Card({
+      data: cardItem,
+      templateSelector: cardElementTemplate,
+      handleCardClick: (name, link) => {
+        newModalWithImage.open(name, link);
+      }
+    }).createCard();
     initialCardsToRender.addItem(card);
   }
 }, cardElementsList);
@@ -30,11 +37,11 @@ const setButtonState = (buttonElement, classElement, state) => {
 const toggleModal = (modalToToggle) => {
   modalToToggle.classList.toggle('modal_opened');
 
-  if (modalToToggle.classList.contains('modal_opened')) {
-    document.addEventListener('keydown', closeModalByEsc);
-  } else {
-    document.removeEventListener('keydown', closeModalByEsc);
-  }
+  // if (modalToToggle.classList.contains('modal_opened')) {
+  //   document.addEventListener('keydown', closeModalByEsc);
+  // } else {
+  //   document.removeEventListener('keydown', closeModalByEsc);
+  // }
 }
 
 const resetInputError = (inputElement, inputElementError) => {
@@ -50,37 +57,39 @@ const toggleModalInputError = (modal, inputElement) => {
   }
 }
 //closing an active modal if escape key is pressed
-const closeModalByEsc = (evt) => {
-  if (evt.key === 'Escape') {
-    const modalList = Array.from(document.querySelectorAll('.modal'));
-    modalList.forEach((modal) => {
-      if (modal.classList.contains('modal_opened')) {
-        toggleModal(modal);
-      }
-    });
-  }
-}
+// const closeModalByEsc = (evt) => {
+//   if (evt.key === 'Escape') {
+//     const modalList = Array.from(document.querySelectorAll('.modal'));
+//     modalList.forEach((modal) => {
+//       if (modal.classList.contains('modal_opened')) {
+//         toggleModal(modal);
+//       }
+//     });
+//   }
+// }
 //closing an active modal if clicked outside the modal
-const closeModalByOverlay = (evt) => {
-  if (evt.target.classList.contains('modal_opened')) {
-    toggleModal(evt.target);
-  }
-}
+// const closeModalByOverlay = (evt) => {
+//   if (evt.target.classList.contains('modal_opened')) {
+//     toggleModal(evt.target);
+//   }
+// }
 //modals toggling functions
 //toggling profile editing modal
-const toggleEditModal = () => {
-  toggleModal(editModal);
+// const toggleEditModal = () => {
+//   toggleModal(editModal);
   
-  nameInput.value = nameField.textContent;
-  jobInput.value = jobField.textContent;
+//   nameInput.value = nameField.textContent;
+//   jobInput.value = jobField.textContent;
   
-  toggleModalInputError(editModal, nameInput);
-  toggleModalInputError(editModal, jobInput);
+//   toggleModalInputError(editModal, nameInput);
+//   toggleModalInputError(editModal, jobInput);
   
-  if (nameInput.validity.valid && jobInput.validity.valid) {
-    setButtonState(editModalSaveButton, 'modal__button_disabled', true);
-  }
-}
+//   if (nameInput.validity.valid && jobInput.validity.valid) {
+//     setButtonState(editModalSaveButton, 'modal__button_disabled', true);
+//   }
+// }
+const editProfileModal = new Modal ('.edit-modal');
+editProfileModal.setEventListeners();
 //toggling new card adding modal
 const toggleAddModal = () => {
   toggleModal(addModal);
@@ -134,10 +143,12 @@ editFormValidator.enableValidation();
 addCardFormValidator.enableValidation();
 //eventListeners
 //profileEditing
-openeditModalButton.addEventListener('click', toggleEditModal);
-editModalCloseButton.addEventListener('click', () => {
-  toggleModal(editModal);
+openEditModalButton.addEventListener('click', () => {
+  editProfileModal.open();
 });
+// editModalCloseButton.addEventListener('click', () => {
+//   toggleModal(editModal);
+// });
 editModalForm.addEventListener('submit', editSubmitHandler);
 //cardAdding
 openaddModalButton.addEventListener('click', toggleAddModal);
@@ -146,9 +157,15 @@ addModalCloseButton.addEventListener('click', () => {
 })
 addModalForm.addEventListener('submit', addSubmitHandler);
 //closing modals by overlay
-editModal.addEventListener('mousedown', (evt) => {
-  closeModalByOverlay(evt);
-});
+// editModal.addEventListener('mousedown', (evt) => {
+//   closeModalByOverlay(evt);
+// });
 addModal.addEventListener('mousedown', (evt) => {
   closeModalByOverlay(evt);
 });
+
+// document.querySelector('.photo-elements__image').addEventListener('click', () => {
+//   alert('dfasd')
+//   const newModalWithImage = new ModalWithImage('.pic-modal');
+//   newModalWithImage.open();
+// })

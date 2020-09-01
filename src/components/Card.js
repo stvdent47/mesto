@@ -2,10 +2,12 @@ import { togglePicModal } from '../utils/utils.js';
 import { picModal, picModalCloseButton } from '../utils/constants.js';
 
 export default class Card {
-  constructor(data, templateSelector) {
+  constructor({data, templateSelector, handleCardClick}) {
+    this._card = data;
     this._caption = data.name;
     this._imageLink = data.link;
     this._templateSelector = templateSelector;
+    this._handleCardClick = handleCardClick;
   }
 
   _toggleLikeButton() {
@@ -16,17 +18,19 @@ export default class Card {
     this.closest('.photo-elements__item').remove();
   }
 
-  _openCard = () => {
-    togglePicModal();
-    picModal.querySelector('.pic-modal__image').src = this._imageLink;
-    picModal.querySelector('.pic-modal__caption').textContent = this._caption;
-    picModalCloseButton.addEventListener('click', togglePicModal);
-  }
+  // _openCard = () => {
+  //   togglePicModal();
+  //   picModal.querySelector('.pic-modal__image').src = this._imageLink;
+  //   picModal.querySelector('.pic-modal__caption').textContent = this._caption;
+  //   picModalCloseButton.addEventListener('click', togglePicModal);
+  // }
 
   _setEventListeners = () => {
     this._card.querySelector('.photo-elements__like-button').addEventListener('click', this._toggleLikeButton);
     this._card.querySelector('.photo-elements__delete-button').addEventListener('click', this._deleteCard);
-    this._card.querySelector('.photo-elements__image').addEventListener('click', this._openCard);
+    this._card.querySelector('.photo-elements__image').addEventListener('click', () => {
+      this._handleCardClick(this._caption, this._imageLink);
+    });
   }
   
   createCard = () => {

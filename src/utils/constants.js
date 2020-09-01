@@ -7,7 +7,7 @@ export const addModalForm = addModal.querySelector('.modal__form');
 export const cardElementsList = document.querySelector('.photo-elements__list');
 export const cardElementTemplate = document.querySelector('#photo-elements-template').content;
 //buttons
-export const openeditModalButton = document.querySelector('.profile__edit-button');
+export const openEditModalButton = document.querySelector('.profile__edit-button');
 export const editModalSaveButton = editModal.querySelector('.modal__button');
 export const editModalCloseButton = editModal.querySelector('.modal__close-button');
 export const openaddModalButton = document.querySelector('.profile__add-button');
