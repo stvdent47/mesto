@@ -19,8 +19,8 @@ export default class Modal {
 
   open = () => {
     this._modal.classList.add('modal_opened');
-    console.log('modal worked');
     document.addEventListener('keydown', this._handleEscClose);
+    console.log('modal worked');
   }
 
   close = () => {

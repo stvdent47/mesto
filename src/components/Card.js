@@ -3,7 +3,6 @@ import { picModal, picModalCloseButton } from '../utils/constants.js';
 
 export default class Card {
   constructor({data, templateSelector, handleCardClick}) {
-    this._card = data;
     this._caption = data.name;
     this._imageLink = data.link;
     this._templateSelector = templateSelector;

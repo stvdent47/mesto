@@ -5,6 +5,7 @@ import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import Modal from '../components/Modal.js';
 import ModalWithImage from '../components/ModalWithImage.js';
+import UserInfo from '../components/UserInfo.js';
 
 const newModalWithImage = new ModalWithImage('.pic-modal');
 newModalWithImage.setEventListeners();
@@ -88,6 +89,8 @@ const toggleModalInputError = (modal, inputElement) => {
 //     setButtonState(editModalSaveButton, 'modal__button_disabled', true);
 //   }
 // }
+const newUserInfo = new UserInfo (nameField, jobField);
+console.log(newUserInfo.getUserInfo());
 const editProfileModal = new Modal ('.edit-modal');
 editProfileModal.setEventListeners();
 //toggling new card adding modal

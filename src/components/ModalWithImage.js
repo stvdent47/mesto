@@ -16,14 +16,10 @@ export default class ModalWithImage extends Modal {
 
   open = (name, link) => {
     this._modal.classList.add('pic-modal_opened');
-    console.log('modal with img worked');
-    console.log(this);
-    console.log(this._modal);
-    // console.log(evt.target);
-    // this._modal.querySelector('.pic-modal__image').src = evt.target.src;
     this._modal.querySelector('.pic-modal__image').src = link;
     this._modal.querySelector('.pic-modal__caption').textContent = name;
     // this._modal.querySelector('.pic-modal__caption').textContent = evt.target.closest('.photo-elements__item').querySelector('.photo-elements__text').textContent;
     document.addEventListener('keydown', this._handleEscClose);
+    console.log('modal with img worked');
   }
 }
