@@ -1,4 +1,4 @@
-import { editModal, addModal, editModalForm, addModalForm, cardElementsList, cardElementTemplate, openEditModalButton, editModalSaveButton, editModalCloseButton, openaddModalButton, addModalSaveButton, addModalCloseButton, nameField, jobField, nameInput, jobInput, addCardInputName, addCardInputLink, addCardInputNameError, addCardInputLinkError } from '../utils/constants.js';
+import { editModal, addModal, editModalForm, addModalForm, cardElementsList, cardElementTemplate, openEditModalButton, editModalSaveButton, editModalCloseButton, openaddModalButton, addModalSaveButton, addModalCloseButton, nameField, jobField, nameInput, jobInput, addCardInputName, addCardInputLink, addCardInputNameError, addCardInputLinkError, validationSettings } from '../utils/constants.js';
 import { initialCards } from '../components/initialCards.js';
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
@@ -6,6 +6,7 @@ import Section from '../components/Section.js';
 import Modal from '../components/Modal.js';
 import ModalWithImage from '../components/ModalWithImage.js';
 import UserInfo from '../components/UserInfo.js';
+import ModalWithForm from '../components/ModalWithForm.js';
 
 const newModalWithImage = new ModalWithImage('.pic-modal');
 newModalWithImage.setEventListeners();
@@ -89,86 +90,116 @@ const toggleModalInputError = (modal, inputElement) => {
 //     setButtonState(editModalSaveButton, 'modal__button_disabled', true);
 //   }
 // }
+//profile editing functionality
 const newUserInfo = new UserInfo (nameField, jobField);
-console.log(newUserInfo.getUserInfo());
-const editProfileModal = new Modal ('.edit-modal');
-editProfileModal.setEventListeners();
-//toggling new card adding modal
-const toggleAddModal = () => {
-  toggleModal(addModal);
+const editFormValidator = new FormValidator(validationSettings, editModalForm);
+editFormValidator.enableValidation();
 
-  if (addModal.classList.contains('modal_opened')) {
-    if (!addCardInputName.value.length) {
-      resetInputError(addCardInputName, addCardInputNameError)
-    }
-    if (!addCardInputLink.value.length) {
-      resetInputError(addCardInputLink, addCardInputLinkError)
-    }
+const editProfileModal = new ModalWithForm ({
+  modalSelector: '.edit-modal',
+  formSubmitHandler: (item) => {
+    newUserInfo.setUserInfo(item[`profile-name`], item[`profile-job`]);
+    editProfileModal.close();
+  },
+  modalOpenHandler: () => {
+    const currentUserInfo = newUserInfo.getUserInfo();
+    nameInput.value = currentUserInfo.name;
+    jobInput.value = currentUserInfo.description;
   }
-}
+});
+editProfileModal.setEventListeners();
+openEditModalButton.addEventListener('click', () => {
+  editProfileModal.open();  
+});
+//card adding functionality
+const addCardFormValidator = new FormValidator(validationSettings, addModalForm);
+addCardFormValidator.enableValidation();
+
+const addCardModal = new ModalWithForm ({
+  modalSelector: '.add-modal',
+  formSubmitHandler: (item) => {
+    console.log(item[`place-name`])
+
+    const newItem = {
+      name: item[`place-name`],
+      link: item[`place-link`]
+    }
+  
+    const newCard = new Card({
+      data: newItem,
+      templateSelector: cardElementTemplate,
+      handleCardClick: (name, link) => {
+        newModalWithImage.open(name, link);
+      }
+    }).createCard();
+    cardElementsList.prepend(newCard);
+    addCardModal.close();
+  },
+  modalOpenHandler: () => {
+
+  }
+});
+addCardModal.setEventListeners();
+openaddModalButton.addEventListener('click', () => {
+  addCardModal.open();
+});
+//toggling new card adding modal
+// const toggleAddModal = () => {
+//   toggleModal(addModal);
+
+//   if (addModal.classList.contains('modal_opened')) {
+//     if (!addCardInputName.value.length) {
+//       resetInputError(addCardInputName, addCardInputNameError)
+//     }
+//     if (!addCardInputLink.value.length) {
+//       resetInputError(addCardInputLink, addCardInputLinkError)
+//     }
+//   }
+// }
 //modals submit handlers
 //profile editing
-const editSubmitHandler = (evt) => {
-  evt.preventDefault();
+// const editSubmitHandler = (evt) => {
+//   evt.preventDefault();
 
-  nameField.textContent = nameInput.value;
-  jobField.textContent = jobInput.value;
-  toggleEditModal(editModal);
-}
+//   nameField.textContent = nameInput.value;
+//   jobField.textContent = jobInput.value;
+//   toggleEditModal(editModal);
+// }
 //new card creating
-const addSubmitHandler = (evt) => {
-  evt.preventDefault();
+// const addSubmitHandler = (evt) => {
+//   evt.preventDefault();
 
-  const newItem = {
-    name: addCardInputName.value,
-    link: addCardInputLink.value
-  }
+//   const newItem = {
+//     name: addCardInputName.value,
+//     link: addCardInputLink.value
+//   }
 
-  const newCard = new Card(newItem , cardElementTemplate).createCard();
-  cardElementsList.prepend(newCard);
-  addModalForm.reset();
-  toggleModal(addModal);
-  setButtonState(addModalSaveButton, 'modal__button_disabled', false);
-}
+//   const newCard = new Card(newItem , cardElementTemplate).createCard();
+//   cardElementsList.prepend(newCard);
+//   addModalForm.reset();
+//   toggleModal(addModal);
+//   setButtonState(addModalSaveButton, 'modal__button_disabled', false);
+// }
 //forms validation
-const validationSettings = {
-    formSelector: '.modal__form',
-    inputSelector: '.modal__input',
-    submitButtonSelector: '.modal__button',
-    inactiveButtonClass: 'modal__button_disabled',
-    inputErrorClass: 'modal__input_type_error',
-    errorClass: 'modal__input-error-message_visible'
-};
 
-const editFormValidator = new FormValidator(validationSettings, editModalForm);
-const addCardFormValidator = new FormValidator(validationSettings, addModalForm);
-editFormValidator.enableValidation();
-addCardFormValidator.enableValidation();
+
 //eventListeners
 //profileEditing
-openEditModalButton.addEventListener('click', () => {
-  editProfileModal.open();
-});
+
 // editModalCloseButton.addEventListener('click', () => {
 //   toggleModal(editModal);
 // });
-editModalForm.addEventListener('submit', editSubmitHandler);
+// editModalForm.addEventListener('submit', editSubmitHandler);
 //cardAdding
-openaddModalButton.addEventListener('click', toggleAddModal);
-addModalCloseButton.addEventListener('click', () => {
-  toggleModal(addModal);
-})
-addModalForm.addEventListener('submit', addSubmitHandler);
+
+// addModalCloseButton.addEventListener('click', () => {
+//   toggleModal(addModal);
+// })
+// addModalForm.addEventListener('submit', addSubmitHandler);
 //closing modals by overlay
 // editModal.addEventListener('mousedown', (evt) => {
 //   closeModalByOverlay(evt);
 // });
-addModal.addEventListener('mousedown', (evt) => {
-  closeModalByOverlay(evt);
-});
-
-// document.querySelector('.photo-elements__image').addEventListener('click', () => {
-//   alert('dfasd')
-//   const newModalWithImage = new ModalWithImage('.pic-modal');
-//   newModalWithImage.open();
-// })
+// addModal.addEventListener('mousedown', (evt) => {
+//   closeModalByOverlay(evt);
+// });
