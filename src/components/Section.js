@@ -1,6 +1,3 @@
-import Card from "./Card.js";
-import { cardElementTemplate } from '../utils/constants.js'
-
 export default class Section {
   constructor( { items, renderer } , containerSelector) {
     this._renderedItems = items;
