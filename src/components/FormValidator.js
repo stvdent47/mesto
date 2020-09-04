@@ -49,6 +49,13 @@ export default class FormValidator {
       this._showInputError(inputElement, inputElement.validationMessage);
     }
   }
+  //hiding input errors && setting submit button state on a modal opening
+  resetInitialInputErrors = () => {
+    this._inputList.forEach((inputElement) => {
+      this._hideInputError(inputElement);
+      this._toggleButtonState();
+    });
+  }
 //enabling validation for all inputs in a form
   enableValidation = () => {
     this._inputList.forEach((inputElement) => {

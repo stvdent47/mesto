@@ -19,6 +19,5 @@ export default class ModalWithImage extends Modal {
     this._modal.querySelector('.pic-modal__image').src = link;
     this._modal.querySelector('.pic-modal__caption').textContent = name;
     document.addEventListener('keydown', this._handleEscClose);
-    console.log('modal with img worked');
   }
 }

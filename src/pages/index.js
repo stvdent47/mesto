@@ -3,11 +3,10 @@ import { initialCards } from '../components/initialCards.js';
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
-import Modal from '../components/Modal.js';
+import ModalWithForm from '../components/ModalWithForm.js';
 import ModalWithImage from '../components/ModalWithImage.js';
 import UserInfo from '../components/UserInfo.js';
-import ModalWithForm from '../components/ModalWithForm.js';
-
+//creating class for enlarged pictures
 const newModalWithImage = new ModalWithImage('.pic-modal');
 newModalWithImage.setEventListeners();
 //rendering initial cards
@@ -105,6 +104,7 @@ const editProfileModal = new ModalWithForm ({
     const currentUserInfo = newUserInfo.getUserInfo();
     nameInput.value = currentUserInfo.name;
     jobInput.value = currentUserInfo.description;
+    editFormValidator.resetInitialInputErrors();
   }
 });
 editProfileModal.setEventListeners();
@@ -118,8 +118,6 @@ addCardFormValidator.enableValidation();
 const addCardModal = new ModalWithForm ({
   modalSelector: '.add-modal',
   formSubmitHandler: (item) => {
-    console.log(item[`place-name`])
-
     const newItem = {
       name: item[`place-name`],
       link: item[`place-link`]
@@ -136,7 +134,7 @@ const addCardModal = new ModalWithForm ({
     addCardModal.close();
   },
   modalOpenHandler: () => {
-
+    addCardFormValidator.resetInitialInputErrors();
   }
 });
 addCardModal.setEventListeners();

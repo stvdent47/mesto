@@ -8,41 +8,32 @@ export default class ModalWithForm extends Modal {
     this._form = this._modal.querySelector('.modal__form');
     this._inputList = Array.from(this._modal.querySelectorAll('.modal__input'));
   }
-
-  _getInputValues = () => {
+//getting values of all inputs
+  _getInputValues() {
     const formInputValues = {};
     this._inputList.forEach((inputElement) => {
       formInputValues[inputElement.name] = inputElement.value;
     });
     return formInputValues;
   }
-
-  close = () => {
-    this._modal.classList.remove('modal_opened');
-    document.removeEventListener('keydown', this._handleEscClose);
+//opening a modal with a form modal opening handler
+  open() {
+    this._modalOpenHandler();
+    super.open();
+  }
+//closing a modal & reseting a form
+  close() {
+    super.close()
     this._form.reset();
   }
-
-  open = () => {
-    this._modalOpenHandler();
-    this._modal.classList.add('modal_opened');
-    document.addEventListener('keydown', this._handleEscClose);
-    console.log('modal worked');
-  }
-
-  setEventListeners = () => {
-    // super.setEventListeners();
-    this._modal.addEventListener('click', (evt) => {
-      if (evt.target.classList.contains('modal_opened') || evt.target.classList.contains('modal__close-button')) {
-        this.close();
-      }
-    });
+//closing a modal by clicking on overlay or close button and adding event listener to submit
+  setEventListeners() {
+    super.setEventListeners();
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
 
       const formInputValues = this._getInputValues();
-      console.log(formInputValues);
       this._formSubmitHandler(formInputValues);
-    })
+    });
   }
 }
