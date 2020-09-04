@@ -24,8 +24,6 @@ export const addCardInputName = addModal.querySelector('#place-name-input');
 export const addCardInputLink = addModal.querySelector('#place-link-input');
 export const addCardInputNameError = addModal.querySelector('#place-name-error');
 export const addCardInputLinkError = addModal.querySelector('#place-link-error');
-
-
 //card class constants
 export const picModal = document.querySelector('.pic-modal');
 export const picModalCloseButton = picModal.querySelector('.pic-modal__close-button');
