@@ -1,3 +1,4 @@
+import './index.css';
 import { editModalForm, addModalForm, cardElementsList, cardElementTemplate, openEditModalButton, openaddModalButton, nameField, jobField, nameInput, jobInput, validationSettings } from '../utils/constants.js';
 import { initialCards } from '../components/initialCards.js';
 import Card from '../components/Card.js';
