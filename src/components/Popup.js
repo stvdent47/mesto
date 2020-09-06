@@ -1,4 +1,4 @@
-export default class Modal {
+export default class Popup {
   constructor(modalSelector) {
     this._modal = document.querySelector(modalSelector);
   }
@@ -10,12 +10,10 @@ export default class Modal {
   }
 //opening a modal
   open() {
-    this._modal.classList.add('modal_opened');
     document.addEventListener('keydown', this._handleEscClose);
   }
 //closing a modal
   close() {
-    this._modal.classList.remove('modal_opened');
     document.removeEventListener('keydown', this._handleEscClose);
   }
   //closing a modal by clicking on overlay or close button
