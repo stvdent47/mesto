@@ -1,6 +1,6 @@
-import Modal from './Modal.js';
+import Popup from './Popup.js';
 
-export default class ModalWithForm extends Modal {
+export default class PopupWithForm extends Popup {
   constructor({ modalSelector, formSubmitHandler, modalOpenHandler }) {
     super(modalSelector);
     this._formSubmitHandler =  formSubmitHandler;
@@ -18,12 +18,14 @@ export default class ModalWithForm extends Modal {
   }
 //opening a modal with a form modal opening handler
   open() {
+    this._modal.classList.add('modal_opened');
     this._modalOpenHandler();
     super.open();
   }
 //closing a modal & reseting a form
   close() {
-    super.close()
+    this._modal.classList.remove('modal_opened');
+    super.close();
     this._form.reset();
   }
 //closing a modal by clicking on overlay or close button and adding event listener to submit
