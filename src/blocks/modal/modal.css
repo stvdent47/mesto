@@ -7,6 +7,7 @@
 @import url(./__input-error-message/_visible/modal__input-error-message_visible.css);
 @import url(./__button/modal__button.css);
 @import url(./__button/_disabled/modal__button_disabled.css);
+@import url(./__button/_type/modal__button_type_update.css);
 @import url(./__button/_type/modal__button_type_remove.css);
 @import url(./__close-button/modal__close-button.css);
 
