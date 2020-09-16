@@ -66,7 +66,22 @@
           <input type="url" name="place-link" id="place-link-input" placeholder="Ссылка на картинку" class="modal__input" required>
           <p class="modal__input-error-message" id="place-link-error"></p>
 
-          <button type="submit" class="modal__button modal__button_disabled" disabled>Сохранить</button>
+          <button type="submit" class="modal__button modal__button_disabled" disabled>Создать</button>
+        </form>
+
+        <button class="modal__close-button" type="button" aria-label="Закрыть"></button>
+      </div>
+    </div>
+
+    <div class="modal avatar-update-modal">
+      <div class="modal__container">
+        <h2 class="modal__title">Обновить аватар</h2>
+        
+        <form action="#" name="form-add-modal" class="modal__form" method="POST" novalidate>
+          <input type="url" name="place-link" id="place-link-input" placeholder="Ссылка на картинку" class="modal__input" required>
+          <p class="modal__input-error-message" id="place-link-error"></p>
+
+          <button type="submit" class="modal__button modal__button_type_update modal__button_disabled" disabled>Сохранить</button>
         </form>
 
         <button class="modal__close-button" type="button" aria-label="Закрыть"></button>
