@@ -1,3 +1,5 @@
+import { name } from "file-loader";
+
 export default class Api {
   constructor({ url, headers }) {
     this._url = url;
@@ -41,7 +43,10 @@ export default class Api {
     return fetch(`${this._url}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
-      body: JSON.stringify(info)
+      body: JSON.stringify({
+        name: info[`profile-name`],
+        about: info[`profile-job`]
+      })
     })
       .then(this._checkErrors);
   }

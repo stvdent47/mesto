@@ -36,7 +36,8 @@ api.getCards()
       }
     }, cardElementsList);
   initialCardsToRender.renderItems();
-});
+}).
+  catch(err => alert(err));
 // const initialCardsToRender = new Section ({
 //   items: initialCards,
 //   renderer: (cardItem) => {
@@ -63,8 +64,12 @@ editFormValidator.enableValidation();
 const editProfileModal = new PopupWithForm ({
   modalSelector: '.edit-modal',
   formSubmitHandler: (item) => {
-    newUserInfo.setUserInfo(item[`profile-name`], item[`profile-job`]);
-    editProfileModal.close();
+    api.editProfile(item)
+      .then(res => {
+        newUserInfo.setUserInfo(res.name, res.about);
+        editProfileModal.close();
+      })
+      .catch(err => alert(err))
   },
   modalOpenHandler: () => {
     const currentUserInfo = newUserInfo.getUserInfo();
