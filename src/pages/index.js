@@ -9,6 +9,16 @@ import PopupWithSubmit from '../components/PopupWithSubmit.js';
 import Section from '../components/Section.js';
 import UserInfo from '../components/UserInfo.js';
 /**
+ * creating api class
+ */
+const api = new Api({
+  url: 'https://mesto.nomoreparties.co/v1/cohort-15',
+  headers: {
+    authorization: '1ed91742-56fd-4a56-812b-580db32d6be2',
+    'Content-Type': 'application/json'
+  }
+});
+/**
  * creating class for enlarged pictures
  */
 const newModalWithImage = new PopupWithImage('.pic-modal');
@@ -16,20 +26,37 @@ newModalWithImage.setEventListeners();
 /**
  * rendering initial cards
  */
-const initialCardsToRender = new Section ({
-  items: initialCards,
-  renderer: (cardItem) => {
-    const newCard = createNewCard(newModalWithImage, cardItem, cardElementTemplate);
-    initialCardsToRender.addItem(newCard);
-  }
-}, cardElementsList);
-initialCardsToRender.renderItems();
+api.getCards()
+  .then(items => {
+    const initialCardsToRender = new Section ({
+      items: items,
+      renderer: (cardItem) => {
+        const newCard = createNewCard(newModalWithImage, cardItem, cardElementTemplate);
+        initialCardsToRender.addItem(newCard);
+      }
+    }, cardElementsList);
+  initialCardsToRender.renderItems();
+});
+// const initialCardsToRender = new Section ({
+//   items: initialCards,
+//   renderer: (cardItem) => {
+//     const newCard = createNewCard(newModalWithImage, cardItem, cardElementTemplate);
+//     initialCardsToRender.addItem(newCard);
+//   }
+// }, cardElementsList);
+// initialCardsToRender.renderItems();
 /**
  * validating user info editing form
  */
 const newUserInfo = new UserInfo (nameField, jobField);
 const editFormValidator = new FormValidator(validationSettings, editModalForm);
 editFormValidator.enableValidation();
+/**
+ * setting user profile data from server
+ */
+ api.getProfileInfo()
+  .then(res => newUserInfo.setUserInfo(res.name, res.about))
+  .catch(err => alert(err));
 /**
  * creating a modal of profile editing
  */
@@ -111,17 +138,3 @@ const removeCardModal = new PopupWithSubmit({
   }
 });
 removeCardModal.setEventListeners();
-
-const currentApi = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-15',
-  headers: {
-    authorization: '1ed91742-56fd-4a56-812b-580db32d6be2',
-    'Content-Type': 'application/json'
-  }
-});
-currentApi.getInitialCards();
-currentApi.getUserInfo();
-
-currentApi.getUserInfo()
-  .then(res => newUserInfo.setUserInfo(res.name, res.about))
-  .catch(err => alert(err));
