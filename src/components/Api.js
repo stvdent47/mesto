@@ -1,30 +1,73 @@
+import { name } from "file-loader";
+
 export default class Api {
-  constructor({ baseUrl, headers }) {
-    this._baseUrl = baseUrl;
+  constructor({ url, headers }) {
+    this._url = url;
     this._headers = headers;
   }
 
   _checkErrors(res) {
     if (res.ok) {
-      console.log(res, `Something is good: ${res.status} ${res.statusText}`);
+      console.log(res, `Everything is good: ${res.status} ${res.statusText}`);
       return res.json();
     } else {
-      return Promise.reject(`Something is wrong: ${res.status} ${res.statusText}`);
+      return Promise.reject(`Something is wrong: 4 8 15 16 23 42 && ${res.status} ${res.statusText}`);
     }
   }
-  getUserInfo() {
-    return fetch(`${this._baseUrl}/users/me`, {
+
+  getProfileInfo() {
+    return fetch(`${this._url}/users/me`, {
       method: 'GET',
       headers: this._headers
     })
       .then(this._checkErrors);
   }
 
-  getInitialCards() {
-    return fetch(`${this._baseUrl}/cards`, {
+  getCards() {
+    return fetch(`${this._url}/cards`, {
       method: 'GET',
       headers: this._headers
     })
+    .then(this._checkErrors);
+  }
+
+  addCard(data) {
+    return fetch(`${this._url}/cards`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify(data)
+    })
+    .then(this._checkErrors);
+  }
+
+  editProfile(info) {
+    return fetch(`${this._url}/users/me`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        name: info[`profile-name`],
+        about: info[`profile-job`]
+      })
+    })
       .then(this._checkErrors);
   }
+
+  updateAvatar(avatarUrl) {
+    return fetch(`${this._url}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: avatarUrl
+      })
+    })
+      .then(this._checkErrors);
+  }
+  // removeCard(id) {
+  //   return fetch(`${this._url}/cards`, {
+  //     method: 'DELETE',
+  //     headers: this._headers,
+  //     body: JSON.stringify(data)
+  //   })
+  //   .then(this._checkErrors);
+  // }
 }
