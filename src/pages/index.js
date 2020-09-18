@@ -1,5 +1,5 @@
 import './index.css';
-import { editModalForm, addModalForm, avatarUpdateForm, cardElementsList, cardElementTemplate, openEditModalButton, openaddModalButton, avatarButton, nameField, jobField, nameInput, jobInput, validationSettings, initialCards } from '../utils/constants.js';
+import { editModalForm, addModalForm, avatarUpdateForm, cardElementsList, cardElementTemplate, openEditModalButton, openaddModalButton, avatarButton, nameField, jobField, nameInput, jobInput, profilePhoto, validationSettings, initialCards } from '../utils/constants.js';
 import { createNewCard } from '../utils/utils.js';
 import Api from '../components/Api';
 import FormValidator from '../components/FormValidator.js';
@@ -56,7 +56,10 @@ editFormValidator.enableValidation();
  * setting user profile data from server
  */
  api.getProfileInfo()
-  .then(res => newUserInfo.setUserInfo(res.name, res.about))
+  .then(res => {
+    newUserInfo.setUserInfo(res.name, res.about)
+    profilePhoto.src = res.avatar;
+  })
   .catch(err => alert(err));
 /**
  * creating a modal of profile editing
@@ -64,12 +67,14 @@ editFormValidator.enableValidation();
 const editProfileModal = new PopupWithForm ({
   modalSelector: '.edit-modal',
   formSubmitHandler: (item) => {
+    editProfileModal.setBtnLoadingState(true);
     api.editProfile(item)
       .then(res => {
         newUserInfo.setUserInfo(res.name, res.about);
         editProfileModal.close();
       })
       .catch(err => alert(err))
+      .finally(() => editProfileModal.setBtnLoadingState(false));
   },
   modalOpenHandler: () => {
     const currentUserInfo = newUserInfo.getUserInfo();
@@ -93,6 +98,7 @@ addCardFormValidator.enableValidation();
 const addCardModal = new PopupWithForm ({
   modalSelector: '.add-modal',
   formSubmitHandler: (item) => {
+    addCardModal.setBtnLoadingState(true);
     const newItem = {
       name: item[`place-name`],
       link: item[`place-link`]
@@ -100,6 +106,7 @@ const addCardModal = new PopupWithForm ({
     const newCard = createNewCard(newModalWithImage, newItem, cardElementTemplate);
     cardElementsList.prepend(newCard);
     addCardModal.close();
+    addCardModal.setBtnLoadingState(false);
   },
   modalOpenHandler: () => {
     addCardFormValidator.resetInitialInputErrors();
@@ -120,8 +127,15 @@ avatarUpdateFormValivator.enableValidation();
 const updateAvatarModal = new PopupWithForm({
   modalSelector: '.avatar-update-modal',
   formSubmitHandler: () => {
-
-    updateAvatarModal.close();
+    updateAvatarModal.setBtnLoadingState(true);
+    const avatarUrl = document.querySelector('#avatar-link-input').value;
+    api.updateAvatar(avatarUrl)
+      .then(res => {
+        profilePhoto.src = res.avatar;
+        updateAvatarModal.close();
+      })
+      .catch(err => alert(err))
+      .finally(() => updateAvatarModal.setBtnLoadingState(false));    
   },
   modalOpenHandler: () => {
     avatarUpdateFormValivator.resetInitialInputErrors();

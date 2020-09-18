@@ -14,6 +14,7 @@ export default class Api {
       return Promise.reject(`Something is wrong: 4 8 15 16 23 42 && ${res.status} ${res.statusText}`);
     }
   }
+
   getProfileInfo() {
     return fetch(`${this._url}/users/me`, {
       method: 'GET',
@@ -51,6 +52,16 @@ export default class Api {
       .then(this._checkErrors);
   }
 
+  updateAvatar(avatarUrl) {
+    return fetch(`${this._url}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: avatarUrl
+      })
+    })
+      .then(this._checkErrors);
+  }
   // removeCard(id) {
   //   return fetch(`${this._url}/cards`, {
   //     method: 'DELETE',
