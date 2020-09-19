@@ -14,7 +14,9 @@ export default class Api {
       return Promise.reject(`Something is wrong: 4 8 15 16 23 42 && ${res.status} ${res.statusText}`);
     }
   }
-
+/**
+ * getting profile info from the server
+ */
   getProfileInfo() {
     return fetch(`${this._url}/users/me`, {
       method: 'GET',
@@ -22,20 +24,13 @@ export default class Api {
     })
       .then(this._checkErrors);
   }
-
+/**
+ * getting cards from the server
+ */
   getCards() {
     return fetch(`${this._url}/cards`, {
       method: 'GET',
       headers: this._headers
-    })
-    .then(this._checkErrors);
-  }
-
-  addCard(data) {
-    return fetch(`${this._url}/cards`, {
-      method: 'POST',
-      headers: this._headers,
-      body: JSON.stringify(data)
     })
     .then(this._checkErrors);
   }
@@ -62,12 +57,24 @@ export default class Api {
     })
       .then(this._checkErrors);
   }
-  // removeCard(id) {
-  //   return fetch(`${this._url}/cards`, {
-  //     method: 'DELETE',
-  //     headers: this._headers,
-  //     body: JSON.stringify(data)
-  //   })
-  //   .then(this._checkErrors);
-  // }
+
+  addCard({ name, link }) {
+    return fetch(`${this._url}/cards`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify({
+        name: name,
+        link: link
+      })
+    })
+    .then(this._checkErrors);
+  }
+  
+  removeCard(cardId) {
+    return fetch(`${this._url}/cards/${cardId}`, {
+      method: 'DELETE',
+      headers: this._headers,
+    })
+    .then(this._checkErrors);
+  }
 }

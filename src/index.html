@@ -88,7 +88,7 @@
       </div>
     </div>
 
-    <div class="modal remove-modal">
+    <div class="modal remove-card-modal">
       <div class="modal__container">
         <h2 class="modal__title modal__title_type_remove">Вы уверены?</h2>
         
@@ -119,9 +119,11 @@
                 
       <div class="photo-elements__caption">
         <h2 class="photo-elements__text"></h2>
-
+        <div class="photo-elements__like-container">
+          <button class="photo-elements__like-button" type="button" aria-label="Нравится"></button>
+          <p class="photo-elements__like-counter">0</p>
+        </div>
         <button class="photo-elements__delete-button" type="button" aria-label="Удалить"></button>
-        <button class="photo-elements__like-button" type="button" aria-label="Нравится"></button>
       </div>
     </li>
   </template>
