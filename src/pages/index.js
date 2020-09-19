@@ -20,15 +20,9 @@ const api = new Api({
   }
 });
 /**
- * setting user profile data from server
+ * creating user info class
  */
 const newUserInfo = new UserInfo (nameField, jobField);
-api.getProfileInfo()
-  .then(res => {
-    newUserInfo.setUserInfo(res.name, res.about)
-    profilePhoto.src = res.avatar;
-})
-.catch(err => alert(err));
 /**
  * validating card adding form
  */
@@ -102,15 +96,7 @@ avatarButton.addEventListener('click', () => {
 /**
  * creating a modal of card removing
  */
-const removeCardModal = new PopupWithSubmit({
-  modalSelector: '.remove-card-modal',
-  formSubmitHandler: () => {
-    api.removeCard()
-      .then(res => console.log(res))
-
-    removeCardModal.close();
-  }
-});
+export const removeCardModal = new PopupWithSubmit('.remove-card-modal');
 removeCardModal.setEventListeners();
 
 Promise.all([api.getProfileInfo(), api.getCards()]).then(res => {
@@ -118,28 +104,17 @@ Promise.all([api.getProfileInfo(), api.getCards()]).then(res => {
   const initialCards = res[1];
   const userId = profileInfo._id;
   /**
+   * setting user profile data from server
+   */
+  newUserInfo.setUserInfo(profileInfo.name, profileInfo.about);
+  profilePhoto.src = profileInfo.avatar;
+  /**
   * rendering initial cards
   */
   const initialCardsToRender = new Section ({
     items: initialCards,
     renderer: (cardItem) => {
-      const newCard = new Card(cardItem, cardElementTemplate, userId,
-      {
-        handleCardClick: (name, link) => {
-          newModalWithImage.open(name, link);
-        },
-        handleLikeClick: (id) => {
-          alert('card liked');
-        },
-        handleDeleteIconClick: () => {
-          api.removeCard(cardItem._id)
-            .then(res => {
-              console.log(res);
-
-            })
-          console.log(cardItem._id)
-        }
-      }).createCard();
+      const newCard = createNewCard(cardItem, cardElementTemplate, userId, newModalWithImage, removeCardModal, api);
       initialCardsToRender.addItem(newCard);
     }
   }, cardElementsList);
@@ -158,23 +133,7 @@ Promise.all([api.getProfileInfo(), api.getCards()]).then(res => {
       api.addCard(newItem)
         .then((res) => {
           addCardModal.setBtnLoadingState(true);
-          const newCard = new Card(res, cardElementTemplate, userId,
-            {
-            handleCardClick: (name, link) => {
-              newModalWithImage.open(name, link);
-            },
-            handleLikeClick: (id) => {
-              alert('card liked');
-            },
-            handleDeleteIconClick: () => {
-              api.removeCard(res._id)
-                .then(res => {
-                  console.log(res);
-  
-                })
-              console.log(res._id)
-            }
-          }).createCard();
+          const newCard = createNewCard(res, cardElementTemplate, userId, newModalWithImage, removeCardModal, api);
           cardElementsList.prepend(newCard);
   
           addCardModal.setBtnLoadingState(false);
@@ -189,4 +148,5 @@ Promise.all([api.getProfileInfo(), api.getCards()]).then(res => {
   openaddModalButton.addEventListener('click', () => {
     addCardModal.open();
   });
-});
+})
+  .catch(err => alert(err));

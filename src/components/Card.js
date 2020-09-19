@@ -38,15 +38,11 @@ export default class Card {
     // this._handleLikeClick();
   }
 
-  _deleteCard() {
-    this._card.remove();
-  }
-
   _setEventListeners() {
     this._card.querySelector('.photo-elements__like-button').addEventListener('click', this._toggleLikeButton);
     this._card.querySelector('.photo-elements__delete-button').addEventListener('click', () => {
       this._handleDeleteIconClick(this._id);
-      this._deleteCard();
+      this._card = null;
     });
     this._card.querySelector('.photo-elements__image').addEventListener('click', () => {
       this._handleCardClick(this._caption, this._imageLink);

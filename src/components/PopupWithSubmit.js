@@ -1,10 +1,11 @@
 import Popup from './Popup.js';
 
 export default class PopupWithSubmit extends Popup {
-  constructor({ modalSelector, formSubmitHandler }) {
+  constructor(modalSelector) {
     super(modalSelector);
-    this._formSubmitHandler = formSubmitHandler;
     this._form = this._modal.querySelector('.modal__form');
+    this._deleteBtn = this._form.querySelector('.modal__button');
+    this._saveBtnInitialText = this._deleteBtn.textContent;
   }
 
   open() {
@@ -15,6 +16,18 @@ export default class PopupWithSubmit extends Popup {
   close() {
     this._modal.classList.remove('modal_opened');
     super.close();
+  }
+
+  setSubmitAction(submitAction) {
+    this._formSubmitHandler = submitAction;
+  }
+
+  setBtnLoadingState(state) {
+    if (state) {
+      this._deleteBtn.textContent = 'Удаление...';
+    } else {
+      this._deleteBtn.textContent = this._saveBtnInitialText;
+    }
   }
 
   setEventListeners() {
