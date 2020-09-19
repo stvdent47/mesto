@@ -1,5 +1,5 @@
 export default class Card {
-  constructor(data, templateSelector, { handleCardClick, handleLikeClick, handleDeleteIconClick }) {
+  constructor(data, templateSelector, userid, { handleCardClick, handleLikeClick, handleDeleteIconClick }) {
     this._caption = data.name;
     this._imageLink = data.link;
     this._ownerId = data.owner._id;
@@ -7,8 +7,7 @@ export default class Card {
     this._handleCardClick = handleCardClick;
     this._handleLikeClick = handleLikeClick;
     this._handleDeleteIconClick = handleDeleteIconClick;
-
-    this._isOwner = data.isOwner;
+    this._userid = userid;
   }
 
   _getTemplate() {
@@ -23,16 +22,14 @@ export default class Card {
 
   createCard() {
     this._card = this._getTemplate();
-    // this._card = this._templateSelector.cloneNode(true);
     // this._cardLikes = this._card.querySelector('.photo-elements__like-counter');
     this._card.querySelector('.photo-elements__text').textContent = this._caption;
     this._card.querySelector('.photo-elements__image').src = this._imageLink;
     this._setEventListeners();
 
-    if (this._isOwner) {
-      this._card.querySelector('.photo-elements__delete-button').classList.add('photo-elements__delete-button_hidden')
+    if (!(this._userid === this._ownerId)) {
+      this._card.querySelector('.photo-elements__delete-button').classList.add('photo-elements__delete-button_hidden');
     }
-
     return this._card;
   }
 

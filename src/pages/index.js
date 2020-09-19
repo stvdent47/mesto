@@ -19,75 +19,21 @@ const api = new Api({
     'Content-Type': 'application/json'
   }
 });
-// Promise.all([api.getProfileInfo(), api.getCards()]).then(res => {
-//   const profileInfo = res[0];
-//   const initialCards = res[1];
-//   console.log(profileInfo);
-//   console.log(initialCards);
-// })
 /**
  * setting user profile data from server
  */
 const newUserInfo = new UserInfo (nameField, jobField);
 api.getProfileInfo()
-.then(res => {
-  newUserInfo.setUserInfo(res.name, res.about)
-  profilePhoto.src = res.avatar;
+  .then(res => {
+    newUserInfo.setUserInfo(res.name, res.about)
+    profilePhoto.src = res.avatar;
 })
 .catch(err => alert(err));
 /**
- * rendering initial cards
+ * validating card adding form
  */
-api.getCards()
-  .then(items => {
-    const initialCardsToRender = new Section ({
-      items: items,
-      renderer: (cardItem) => {
-
-        const newCard = new Card(cardItem, cardElementTemplate,
-          {
-          handleCardClick: (name, link) => {
-            newModalWithImage.open(name, link);
-          },
-          handleLikeClick: (id) => {
-            alert('card liked');
-          },
-          handleDeleteIconClick: () => {
-            api.removeCard(cardItem._id)
-              .then(res => {
-                console.log(res);
-
-              })
-            console.log(cardItem._id)
-          }
-        }).createCard();
-        initialCardsToRender.addItem(newCard);
-        console.log(`the card item id: ${cardItem._id}`)
-        // const newCard = createNewCard(newModalWithImage, cardItem, cardElementTemplate);
-          // initialCardsToRender.addItem(newCard);
-      }
-    }, cardElementsList);
-  initialCardsToRender.renderItems();
-}).
-  catch(err => alert(err));
-/**
- * creating class for enlarged pictures
- */
-const newModalWithImage = new PopupWithImage('.pic-modal');
-newModalWithImage.setEventListeners();
-/**
- * creating a modal of card removing
- */
-const removeCardModal = new PopupWithSubmit({
-  modalSelector: '.remove-card-modal',
-  formSubmitHandler: () => {
-    api.removeCard()
-      .then(res => console.log(res))
-
-    removeCardModal.close();
-  }
-});
-removeCardModal.setEventListeners();
+const addCardFormValidator = new FormValidator(validationSettings, addModalForm);
+addCardFormValidator.enableValidation();
 /**
  * validating user info editing form
  */
@@ -120,75 +66,10 @@ openEditModalButton.addEventListener('click', () => {
   editProfileModal.open();  
 });
 /**
- * validating card adding form
+ * creating a modal of an enlarged card picture
  */
-const addCardFormValidator = new FormValidator(validationSettings, addModalForm);
-addCardFormValidator.enableValidation();
-/**
- * creating a modal of card adding
- */
-// const addCardModal = new PopupWithForm ({
-//   modalSelector: '.add-modal',
-//   formSubmitHandler: (item) => {
-//     addCardModal.setBtnLoadingState(true);
-//     const newItem = {
-//       name: item[`place-name`],
-//       link: item[`place-link`]
-//     }
-//     const newCard = createNewCard(newModalWithImage, newItem, cardElementTemplate);
-//     cardElementsList.prepend(newCard);
-//     addCardModal.close();
-//     addCardModal.setBtnLoadingState(false);
-//   },
-//   modalOpenHandler: () => {
-//     addCardFormValidator.resetInitialInputErrors();
-//   }
-// });
-// addCardModal.setEventListeners();
-// openaddModalButton.addEventListener('click', () => {
-//   addCardModal.open();
-// });
-const addCardModal = new PopupWithForm ({
-  modalSelector: '.add-modal',
-  formSubmitHandler: (item) => {
-    addCardModal.setBtnLoadingState(true);
-    const newItem = {
-      name: item[`place-name`],
-      link: item[`place-link`]
-    }
-    api.addCard(newItem)
-      .then((res) => {
-        addCardModal.setBtnLoadingState(true);
-        const newCard = new Card(res, cardElementTemplate,
-          {
-          handleCardClick: (name, link) => {
-            newModalWithImage.open(name, link);
-          },
-          handleLikeClick: (id) => {
-            alert('card liked');
-          },
-          handleDeleteIconClick: () => {
-            api.removeCard(res._id)
-              .then(res => {
-                console.log(res);
-              })
-            console.log(res._id)
-          }
-        }).createCard();
-        cardElementsList.prepend(newCard);
-
-        addCardModal.setBtnLoadingState(false);
-        addCardModal.close();
-      });
-  },
-  modalOpenHandler: () => {
-    addCardFormValidator.resetInitialInputErrors();
-  }
-});
-addCardModal.setEventListeners();
-openaddModalButton.addEventListener('click', () => {
-  addCardModal.open();
-});
+const newModalWithImage = new PopupWithImage('.pic-modal');
+newModalWithImage.setEventListeners();
 /**
  * validating avatar updating form
  */
@@ -217,4 +98,95 @@ const updateAvatarModal = new PopupWithForm({
 updateAvatarModal.setEventListeners();
 avatarButton.addEventListener('click', () => {
   updateAvatarModal.open();
+});
+/**
+ * creating a modal of card removing
+ */
+const removeCardModal = new PopupWithSubmit({
+  modalSelector: '.remove-card-modal',
+  formSubmitHandler: () => {
+    api.removeCard()
+      .then(res => console.log(res))
+
+    removeCardModal.close();
+  }
+});
+removeCardModal.setEventListeners();
+
+Promise.all([api.getProfileInfo(), api.getCards()]).then(res => {
+  const profileInfo = res[0];
+  const initialCards = res[1];
+  const userId = profileInfo._id;
+  /**
+  * rendering initial cards
+  */
+  const initialCardsToRender = new Section ({
+    items: initialCards,
+    renderer: (cardItem) => {
+      const newCard = new Card(cardItem, cardElementTemplate, userId,
+      {
+        handleCardClick: (name, link) => {
+          newModalWithImage.open(name, link);
+        },
+        handleLikeClick: (id) => {
+          alert('card liked');
+        },
+        handleDeleteIconClick: () => {
+          api.removeCard(cardItem._id)
+            .then(res => {
+              console.log(res);
+
+            })
+          console.log(cardItem._id)
+        }
+      }).createCard();
+      initialCardsToRender.addItem(newCard);
+    }
+  }, cardElementsList);
+  initialCardsToRender.renderItems();
+  /**
+  * creating a modal of card adding
+  */
+  const addCardModal = new PopupWithForm ({
+    modalSelector: '.add-modal',
+    formSubmitHandler: (item) => {
+      addCardModal.setBtnLoadingState(true);
+      const newItem = {
+        name: item[`place-name`],
+        link: item[`place-link`]
+      }
+      api.addCard(newItem)
+        .then((res) => {
+          addCardModal.setBtnLoadingState(true);
+          const newCard = new Card(res, cardElementTemplate, userId,
+            {
+            handleCardClick: (name, link) => {
+              newModalWithImage.open(name, link);
+            },
+            handleLikeClick: (id) => {
+              alert('card liked');
+            },
+            handleDeleteIconClick: () => {
+              api.removeCard(res._id)
+                .then(res => {
+                  console.log(res);
+  
+                })
+              console.log(res._id)
+            }
+          }).createCard();
+          cardElementsList.prepend(newCard);
+  
+          addCardModal.setBtnLoadingState(false);
+          addCardModal.close();
+        });
+    },
+    modalOpenHandler: () => {
+      addCardFormValidator.resetInitialInputErrors();
+    }
+  });
+  addCardModal.setEventListeners();
+  openaddModalButton.addEventListener('click', () => {
+    addCardModal.open();
+  });
 });
