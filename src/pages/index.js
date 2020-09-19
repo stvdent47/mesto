@@ -1,5 +1,5 @@
 import './index.css';
-import { editModalForm, addModalForm, avatarUpdateForm, cardElementsList, cardElementTemplate, openEditModalButton, openaddModalButton, avatarButton, nameField, jobField, nameInput, jobInput, profilePhoto, validationSettings, initialCards } from '../utils/constants.js';
+import { editModalForm, addModalForm, avatarUpdateForm, cardElementsList, cardElementTemplate, openEditModalButton, openaddModalButton, avatarButton, nameField, jobField, nameInput, jobInput, profilePhoto, likeCounter, validationSettings, initialCards } from '../utils/constants.js';
 import { createNewCard } from '../utils/utils.js';
 import Api from '../components/Api';
 import FormValidator from '../components/FormValidator.js';
@@ -8,6 +8,7 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithSubmit from '../components/PopupWithSubmit.js';
 import Section from '../components/Section.js';
 import UserInfo from '../components/UserInfo.js';
+import Card from '../components/Card';
 /**
  * creating api class
  */
@@ -19,48 +20,19 @@ const api = new Api({
   }
 });
 /**
- * creating class for enlarged pictures
+ * creating user info class
  */
-const newModalWithImage = new PopupWithImage('.pic-modal');
-newModalWithImage.setEventListeners();
+const newUserInfo = new UserInfo (nameField, jobField);
 /**
- * rendering initial cards
+ * validating card adding form
  */
-api.getCards()
-  .then(items => {
-    const initialCardsToRender = new Section ({
-      items: items,
-      renderer: (cardItem) => {
-        const newCard = createNewCard(newModalWithImage, cardItem, cardElementTemplate);
-        initialCardsToRender.addItem(newCard);
-      }
-    }, cardElementsList);
-  initialCardsToRender.renderItems();
-}).
-  catch(err => alert(err));
-// const initialCardsToRender = new Section ({
-//   items: initialCards,
-//   renderer: (cardItem) => {
-//     const newCard = createNewCard(newModalWithImage, cardItem, cardElementTemplate);
-//     initialCardsToRender.addItem(newCard);
-//   }
-// }, cardElementsList);
-// initialCardsToRender.renderItems();
+const addCardFormValidator = new FormValidator(validationSettings, addModalForm);
+addCardFormValidator.enableValidation();
 /**
  * validating user info editing form
  */
-const newUserInfo = new UserInfo (nameField, jobField);
 const editFormValidator = new FormValidator(validationSettings, editModalForm);
 editFormValidator.enableValidation();
-/**
- * setting user profile data from server
- */
- api.getProfileInfo()
-  .then(res => {
-    newUserInfo.setUserInfo(res.name, res.about)
-    profilePhoto.src = res.avatar;
-  })
-  .catch(err => alert(err));
 /**
  * creating a modal of profile editing
  */
@@ -88,34 +60,10 @@ openEditModalButton.addEventListener('click', () => {
   editProfileModal.open();  
 });
 /**
- * validating card adding form
+ * creating a modal of an enlarged card picture
  */
-const addCardFormValidator = new FormValidator(validationSettings, addModalForm);
-addCardFormValidator.enableValidation();
-/**
- * creating a modal of card adding
- */
-const addCardModal = new PopupWithForm ({
-  modalSelector: '.add-modal',
-  formSubmitHandler: (item) => {
-    addCardModal.setBtnLoadingState(true);
-    const newItem = {
-      name: item[`place-name`],
-      link: item[`place-link`]
-    }
-    const newCard = createNewCard(newModalWithImage, newItem, cardElementTemplate);
-    cardElementsList.prepend(newCard);
-    addCardModal.close();
-    addCardModal.setBtnLoadingState(false);
-  },
-  modalOpenHandler: () => {
-    addCardFormValidator.resetInitialInputErrors();
-  }
-});
-addCardModal.setEventListeners();
-openaddModalButton.addEventListener('click', () => {
-  addCardModal.open();
-});
+const newModalWithImage = new PopupWithImage('.pic-modal');
+newModalWithImage.setEventListeners();
 /**
  * validating avatar updating form
  */
@@ -148,12 +96,57 @@ avatarButton.addEventListener('click', () => {
 /**
  * creating a modal of card removing
  */
-const removeCardModal = new PopupWithSubmit({
-  modalSelector: '.remove-modal',
-  formSubmitHandler: () => {
-    alert('dsdas');
-
-    removeCardModal.close();
-  }
-});
+export const removeCardModal = new PopupWithSubmit('.remove-card-modal');
 removeCardModal.setEventListeners();
+
+Promise.all([api.getProfileInfo(), api.getCards()]).then(res => {
+  const profileInfo = res[0];
+  const initialCards = res[1];
+  const userId = profileInfo._id;
+  /**
+   * setting user profile data from server
+   */
+  newUserInfo.setUserInfo(profileInfo.name, profileInfo.about);
+  profilePhoto.src = profileInfo.avatar;
+  /**
+  * rendering initial cards
+  */
+  const initialCardsToRender = new Section ({
+    items: initialCards,
+    renderer: (cardItem) => {
+      const newCard = createNewCard(cardItem, cardElementTemplate, userId, newModalWithImage, removeCardModal, api);
+      initialCardsToRender.addItem(newCard);
+    }
+  }, cardElementsList);
+  initialCardsToRender.renderItems();
+  /**
+  * creating a modal of card adding
+  */
+  const addCardModal = new PopupWithForm ({
+    modalSelector: '.add-modal',
+    formSubmitHandler: (item) => {
+      addCardModal.setBtnLoadingState(true);
+      const newItem = {
+        name: item[`place-name`],
+        link: item[`place-link`]
+      }
+      api.addCard(newItem)
+        .then((res) => {
+          addCardModal.setBtnLoadingState(true);
+          const newCard = createNewCard(res, cardElementTemplate, userId, newModalWithImage, removeCardModal, api);
+          cardElementsList.prepend(newCard);
+  
+          addCardModal.setBtnLoadingState(false);
+          addCardModal.close();
+        });
+    },
+    modalOpenHandler: () => {
+      addCardFormValidator.resetInitialInputErrors();
+    }
+  });
+  addCardModal.setEventListeners();
+  openaddModalButton.addEventListener('click', () => {
+    addCardModal.open();
+  });
+})
+  .catch(err => alert(err));
