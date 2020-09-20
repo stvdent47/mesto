@@ -12,7 +12,6 @@ export const picModal = document.querySelector('.pic-modal');
 export const cardElementsList = document.querySelector('.photo-elements__list');
 export const cardElementTemplate = document.querySelector('#photo-elements-template').content;
 export const profilePhoto = document.querySelector('.profile__photo');
-export const likeCounter = document.querySelector('.photo-elements__like-counter');
 /**
  * buttons
  */
