@@ -11,8 +11,9 @@ export default class PopupWithImage extends Popup {
 
   open(name, link) {
     this._modal.classList.add('pic-modal_opened');
-    this._modal.querySelector('.pic-modal__image').src = link;
     this._modal.querySelector('.pic-modal__caption').textContent = name;
+    this._modal.querySelector('.pic-modal__image').alt = name;
+    this._modal.querySelector('.pic-modal__image').src = link;
     super.open();
   }
 
