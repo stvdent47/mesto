@@ -17,7 +17,7 @@ export const profilePhoto = document.querySelector('.profile__photo');
  */
 export const openEditModalButton = document.querySelector('.profile__edit-button');
 export const openaddModalButton = document.querySelector('.profile__add-button');
-export const avatarButton = document.querySelector('.profile__photo');
+export const avatarButton = document.querySelector('.profile__photo-container');
 /**
  * edit-form fields
  */
