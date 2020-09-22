@@ -1,5 +1,5 @@
 import './index.css';
-import { editModalForm, addModalForm, avatarUpdateForm, cardElementsList, cardElementTemplate, openEditModalButton, openaddModalButton, avatarButton, nameField, jobField, nameInput, jobInput, profilePhoto, likeCounter, validationSettings, initialCards } from '../utils/constants.js';
+import { editModalForm, addModalForm, avatarUpdateForm, cardElementsList, cardElementTemplate, openEditModalButton, openaddModalButton, avatarButton, nameField, jobField, nameInput, jobInput, profilePhoto, likeCounter, validationSettings } from '../utils/constants.js';
 import { createNewCard } from '../utils/utils.js';
 import Api from '../components/Api';
 import FormValidator from '../components/FormValidator.js';
@@ -8,7 +8,6 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithSubmit from '../components/PopupWithSubmit.js';
 import Section from '../components/Section.js';
 import UserInfo from '../components/UserInfo.js';
-import Card from '../components/Card';
 /**
  * creating api class
  */
@@ -79,7 +78,7 @@ const updateAvatarModal = new PopupWithForm({
     const avatarUrl = document.querySelector('#avatar-link-input').value;
     api.updateAvatar(avatarUrl)
       .then(res => {
-        profilePhoto.src = res.avatar;
+        newUserInfo.updateAvater(res);
         updateAvatarModal.close();
       })
       .catch(err => alert(err))
@@ -99,54 +98,54 @@ avatarButton.addEventListener('click', () => {
 export const removeCardModal = new PopupWithSubmit('.remove-card-modal');
 removeCardModal.setEventListeners();
 
-Promise.all([api.getProfileInfo(), api.getCards()]).then(res => {
-  const profileInfo = res[0];
-  const initialCards = res[1];
-  const userId = profileInfo._id;
-  /**
-   * setting user profile data from server
-   */
-  newUserInfo.setUserInfo(profileInfo.name, profileInfo.about);
-  profilePhoto.src = profileInfo.avatar;
-  /**
-  * rendering initial cards
-  */
-  const initialCardsToRender = new Section ({
-    items: initialCards,
-    renderer: (cardItem) => {
-      const newCard = createNewCard(cardItem, cardElementTemplate, userId, newModalWithImage, removeCardModal, api);
-      initialCardsToRender.addItem(newCard);
-    }
-  }, cardElementsList);
-  initialCardsToRender.renderItems();
-  /**
-  * creating a modal of card adding
-  */
-  const addCardModal = new PopupWithForm ({
-    modalSelector: '.add-modal',
-    formSubmitHandler: (item) => {
-      addCardModal.setBtnLoadingState(true);
-      const newItem = {
-        name: item[`place-name`],
-        link: item[`place-link`]
+Promise.all([api.getProfileInfo(), api.getCards()])
+  .then(res => {
+    const [ profileInfo, initialCards ] = res;
+    const userId = profileInfo._id;
+    /**
+     * setting user profile data from server
+     */
+    newUserInfo.setUserInfo(profileInfo.name, profileInfo.about);
+    newUserInfo.updateAvater(profileInfo);
+    /**
+    * rendering initial cards
+    */
+    const initialCardsToRender = new Section ({
+      items: initialCards,
+      renderer: (cardItem) => {
+        const newCard = createNewCard(cardItem, cardElementTemplate, userId, newModalWithImage, removeCardModal, api);
+        initialCardsToRender.addItem(newCard);
       }
-      api.addCard(newItem)
-        .then((res) => {
-          addCardModal.setBtnLoadingState(true);
-          const newCard = createNewCard(res, cardElementTemplate, userId, newModalWithImage, removeCardModal, api);
-          cardElementsList.prepend(newCard);
-  
-          addCardModal.setBtnLoadingState(false);
-          addCardModal.close();
-        });
-    },
-    modalOpenHandler: () => {
-      addCardFormValidator.resetInitialInputErrors();
-    }
-  });
-  addCardModal.setEventListeners();
-  openaddModalButton.addEventListener('click', () => {
-    addCardModal.open();
-  });
-})
+    }, cardElementsList);
+    initialCardsToRender.renderItems();
+    /**
+    * creating a modal of card adding
+    */
+    const addCardModal = new PopupWithForm ({
+      modalSelector: '.add-modal',
+      formSubmitHandler: (item) => {
+        const newItem = {
+          name: item[`place-name`],
+          link: item[`place-link`]
+        }
+        addCardModal.setBtnLoadingState(true);
+        api.addCard(newItem)
+          .then((res) => {
+            const newCard = createNewCard(res, cardElementTemplate, userId, newModalWithImage, removeCardModal, api);
+            cardElementsList.prepend(newCard);
+    
+            addCardModal.close();
+          })
+          .catch(err => alert(err))
+          .finally(addCardModal.setBtnLoadingState(false));
+      },
+      modalOpenHandler: () => {
+        addCardFormValidator.resetInitialInputErrors();
+      }
+    });
+    addCardModal.setEventListeners();
+    openaddModalButton.addEventListener('click', () => {
+      addCardModal.open();
+    });
+  })
   .catch(err => alert(err));

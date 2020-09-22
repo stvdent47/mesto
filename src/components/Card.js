@@ -55,7 +55,9 @@ export default class Card {
   /**
    * toggling like button state: liked/not liked
    */
-  _toggleLikeButton() {
+  updateLikes(num) {
+    this._isLiked = !this._isLiked;
+    this._cardLikes.textContent = num;
     this._card.querySelector('.photo-elements__like-button').classList.toggle('photo-elements__like-button_active');
   }
   /**
@@ -63,16 +65,7 @@ export default class Card {
    */
   _setEventListeners() {
     this._card.querySelector('.photo-elements__like-button').addEventListener('click', () => {
-      this._toggleLikeButton();
       this._handleLikeClick(this._isLiked);
-
-      if (this._isLiked) {
-        this._cardLikes.textContent = Number(this._cardLikes.textContent) - 1;
-      } else {
-        this._cardLikes.textContent = Number(this._cardLikes.textContent) + 1;
-      }
-
-      this._isLiked = !this._isLiked;
     });
     this._card.querySelector('.photo-elements__delete-button').addEventListener('click', () => {
       this._handleDeleteIconClick(this._id);
