@@ -124,11 +124,11 @@ Promise.all([api.getProfileInfo(), api.getCards()])
     const addCardModal = new PopupWithForm ({
       modalSelector: '.add-modal',
       formSubmitHandler: (item) => {
+        addCardModal.setBtnLoadingState(true);
         const newItem = {
           name: item[`place-name`],
           link: item[`place-link`]
         }
-        addCardModal.setBtnLoadingState(true);
         api.addCard(newItem)
           .then((res) => {
             const newCard = createNewCard(res, cardElementTemplate, userId, newModalWithImage, removeCardModal, api);
