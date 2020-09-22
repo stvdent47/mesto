@@ -16,13 +16,14 @@ export const createNewCard = (data, cardElementTemplate, userId, modalWithImage,
     /**
      * what to do when card like button is clicked
      */
-    handleLikeClick: (isLiked) => {
+    handleLikeClick (isLiked) {
       if (!isLiked) {
         api.addLike(data._id)
-          // .then(res => newCard.setLikesNumber(res.likes.length))
+          .then(res => this.updateLikes(res.likes.length))
           .catch(err => alert(err));
       } else {
         api.removeLike(data._id)
+          .then(res => this.updateLikes(res.likes.length))
           .catch(err => alert(err));
       }
     },
