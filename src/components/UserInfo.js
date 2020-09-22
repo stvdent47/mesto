@@ -1,3 +1,5 @@
+import { profilePhoto } from '../utils/constants.js';
+
 export default class UserInfo {
   constructor(nameSelector, descriptionSelector) {
     this._nameSelector = nameSelector;
@@ -15,5 +17,9 @@ export default class UserInfo {
   setUserInfo(name, description) {
     this._nameSelector.textContent = name;
     this._descriptionSelector.textContent = description;
+  }
+
+  updateAvater(data) {
+    profilePhoto.src = data.avatar;
   }
 }
