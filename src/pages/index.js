@@ -1,5 +1,5 @@
 import './index.css';
-import { editModalForm, addModalForm, avatarUpdateForm, cardElementsList, cardElementTemplate, openEditModalButton, openaddModalButton, avatarButton, nameField, jobField, nameInput, jobInput, profilePhoto, likeCounter, validationSettings } from '../utils/constants.js';
+import { editModalForm, addModalForm, avatarUpdateForm, cardElementsList, cardElementTemplate, openEditModalButton, openaddModalButton, avatarButton, nameField, jobField, nameInput, jobInput, validationSettings } from '../utils/constants.js';
 import { createNewCard } from '../utils/utils.js';
 import Api from '../components/Api';
 import FormValidator from '../components/FormValidator.js';
@@ -95,7 +95,7 @@ avatarButton.addEventListener('click', () => {
 /**
  * creating a modal of card removing
  */
-export const removeCardModal = new PopupWithSubmit('.remove-card-modal');
+const removeCardModal = new PopupWithSubmit('.remove-card-modal');
 removeCardModal.setEventListeners();
 
 Promise.all([api.getProfileInfo(), api.getCards()])
@@ -137,7 +137,7 @@ Promise.all([api.getProfileInfo(), api.getCards()])
             addCardModal.close();
           })
           .catch(err => alert(err))
-          .finally(addCardModal.setBtnLoadingState(false));
+          .finally(() => addCardModal.setBtnLoadingState(false));
       },
       modalOpenHandler: () => {
         addCardFormValidator.resetInitialInputErrors();

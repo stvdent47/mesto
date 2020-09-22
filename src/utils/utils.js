@@ -43,7 +43,7 @@ export const createNewCard = (data, cardElementTemplate, userId, modalWithImage,
             newCard.remove();
           })
           .catch(err => alert(err))
-          .finally(removeCardModal.setBtnLoadingState(false));
+          .finally(() => removeCardModal.setBtnLoadingState(false));
       });
     }
   }).createCard();
