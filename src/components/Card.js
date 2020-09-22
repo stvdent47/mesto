@@ -58,6 +58,10 @@ export default class Card {
   _toggleLikeButton() {
     this._card.querySelector('.photo-elements__like-button').classList.toggle('photo-elements__like-button_active');
   }
+
+  setLikesNumber(num) {
+    console.log(num)
+  }
   /**
    * setting event listeners to card buttons
    */

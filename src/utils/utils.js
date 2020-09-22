@@ -19,6 +19,7 @@ export const createNewCard = (data, cardElementTemplate, userId, modalWithImage,
     handleLikeClick: (isLiked) => {
       if (!isLiked) {
         api.addLike(data._id)
+          // .then(res => newCard.setLikesNumber(res.likes.length))
           .catch(err => alert(err));
       } else {
         api.removeLike(data._id)
@@ -34,14 +35,14 @@ export const createNewCard = (data, cardElementTemplate, userId, modalWithImage,
        * what to do when a card removing is submitted in a modal 
        */
       removeCardModal.setSubmitAction(() => {
+        removeCardModal.setBtnLoadingState(true);
         api.removeCard(data._id)
           .then(() => {
-            removeCardModal.setBtnLoadingState(true);
             removeCardModal.close();
             newCard.remove();
-            removeCardModal.setBtnLoadingState(false);
           })
-          .catch(err => alert(err));
+          .catch(err => alert(err))
+          .finally(removeCardModal.setBtnLoadingState(false));
       });
     }
   }).createCard();
