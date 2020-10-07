@@ -29,7 +29,7 @@ export default class Card {
    */
   _renderLikes() {
     this._data.likes.some(elem => {
-      if (elem._id == this._userid) {
+      if (this._isLiked) {
         this._card.querySelector('.photo-elements__like-button').classList.add('photo-elements__like-button_active');
       }
     })
